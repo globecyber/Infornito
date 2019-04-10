@@ -1,0 +1,64 @@
+import sqlite3
+import os
+import plistlib
+from pprint import pprint
+from libs.general import general
+
+class safari(general):
+    config = {
+        'hisotry_database_name' : 'History.db',
+        'download_database_file' : 'Downloads.plist',
+        'platform_profile_path' : {
+            'darwin' : 'Library/Safari/',
+        }
+    }
+
+    def __init__(self):
+        general.__init__(self)
+        self.profiles_path = os.path.join(self.user_home, self.config['platform_profile_path'][self.platform_name])
+
+    def history(self, profile_path):
+        try:
+            connection = sqlite3.connect(os.path.join(profile_path, self.config['hisotry_database_name']))
+            db_cursor = connection.cursor()
+            db_cursor.execute("SELECT url, visit_count FROM history_items ORDER BY visit_count;")
+            urls = db_cursor.fetchall()
+            parsed_histories = []
+            for url in urls:
+                parsed_histories.append({
+                    'url' : url[0],
+                    'count' : str(url[1]),
+                })
+            db_cursor.close()
+            return parsed_histories        
+        except Exception as error:
+            print('Error : ' + str(error))
+            exit()
+
+    def downloads(self, profile_path):
+        try:
+            downloaded_files = plistlib.readPlist(os.path.join(profile_path, self.config['download_database_file']))
+            downloads = []
+            for download_item in downloaded_files['DownloadHistory']:
+                is_fully_download = False
+                if download_item['DownloadEntryProgressBytesSoFar'] ==  download_item['DownloadEntryProgressTotalToLoad']:
+                    is_fully_download = True
+                
+                downloads.append({
+                    'url' : download_item['DownloadEntryURL'],
+                    'saved_in' : download_item['DownloadEntryPath'].split('.download')[0],
+                    'start_downloading_at' : str(download_item['DownloadEntryDateAddedKey']),
+                    'size' : str(download_item['DownloadEntryProgressTotalToLoad']),
+                    'is_fully_download' : is_fully_download
+                })
+
+            return downloads   
+        except Exception as error:
+            print('Error : ' + str(error))
+            exit()
+
+    def get_profiles(self):
+        profiles = []
+        if os.path.isdir(self.profiles_path):
+            profiles.append({'path' : self.profiles_path, 'name': 'Default', 'browser': self.__class__.__name__})
+        return profiles

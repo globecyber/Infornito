@@ -1,0 +1,81 @@
+<p align="center">
+<img src="repo/infornito.png" ><br>
+<img src="https://img.shields.io/github/release-pre/GlobeCyber/Infornito.svg">
+</p>
+
+# Infornito 
+Infornito developed in Python 3.x and has as purpose extract all forensic interesting information of Chrome, Firefox, Safari browsers to be analyzed. Due to its Python 3.x developement, might not work properly in old Python versions, mainly with certain characters. Works under Unix and Windows 32/64 bits systems. Works in command line interface, so information dumps could be redirected by pipes with tools such as grep, awk, cut, sed... Infornito allows to visualize following sections, search customization and extract certain content.
+
+### Installation
+```bash
+git clone https://github.com/GlobeCyber/Infornito
+```
+Requirements :
+- Python 3
+- Tabulate
+
+```bash
+pip install -r requirements.txt
+```
+### Usage
+```
+  _______     __       _____     __
+ / ___/ /__  / /  ___ / ___/_ __/ /  ___ ____
+/ (_ / / _ \/ _ \/ -_) /__/ // / _ \/ -_) __/
+\___/_/\___/_.__/\__/\___/\_, /_.__/\__/_/
+                         /___/
+            < Infornito v0.2 >
+
+usage: infornito.py [-h] {profiles,history,downloads} ...
+
+Simple browser forensic tool
+
+positional arguments:
+  {profiles,history,downloads}
+
+optional arguments:
+  -h, --help            show this help message and exit
+```
+### Profiles
+list browsers (Chrome, Firefox, Safari) profiles.
+```bash
+python infornito.py profiles
+```
+```
+  ID  Path                          Browser Type
+----  ----------------------------  --------------
+   1  21a6irx65.default             Firefox
+   2  je9q4srv.dev-edition-default  Firefox
+   3  Profile 1                     Chrome
+   4  Default                       Chrome
+   5  Default                       Safari
+```
+### History
+Show Profile url visit history.
+```bash
+python infornito.py history --pid 2
+```
+```
+[18] https://www.google.com/ ( 2019-03-27 11:15:18 )
+[19] https://yahoo.com/# ( 2018-10-31 12:23:25 )
+[22] https://instagram.com/ ( 2018-11-07 17:06:48 )
+[27] http://facebook.com/home.php ( 2018-10-24 13:45:21 )
+
+[Total visit] URL ( Last Visit )
+----------------- Summary ----------------
+Total url : 4
+```
+
+### Downloads
+Show Profile downloaded files.
+```bash
+python infornito.py downloads --pid 2
+```
+```
+[+] http://www.yahoo.com/img/logo.png -> /Users/myuser/Desktop/logo.png ( 2019-03-24 21:33:26 )
+[+] http://facebook.com/.databases/db.zip -> /Users/myuser/Desktop/db.zip ( 2019-03-14 10:58:07 )
+
+[Total visit] URL ( Last Visit )
+----------------- Summary ----------------
+Total url : 4
+```

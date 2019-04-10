@@ -1,7 +1,9 @@
 <p align="center">
 <img src="repo/infornito.png" ><br>
-<img src="https://img.shields.io/github/release-pre/GlobeCyber/Infornito.svg"> <img src="https://img.shields.io/github/license/GlobeCyber/Infornito.svg">
-
+<img src="https://img.shields.io/badge/Python-3.x-blue.svg">
+<img src="https://img.shields.io/github/license/GlobeCyber/Infornito.svg">
+<img src="https://img.shields.io/github/release-pre/GlobeCyber/Infornito.svg"> 
+<img src="https://img.shields.io/github/issues-raw/GlobeCyber/Infornito.svg">
 </p>
 
 # Infornito 
@@ -12,25 +14,25 @@ Infornito developed in Python 3.x and has as purpose extract all forensic intere
 - [Installation](#installation)
 	- [Requirements](#requirements)
 - [Usage](#usage)
-- [Profiles](#profiles)
-- [History](#history)
-- [Downloads](#downloads)
+  - [Profiles](#profiles)
+  - [History](#history)
+  - [Downloads](#downloads)
 - [Contributing](#contributing)
 - [License](#license)
 
 
-### Installation
+## Installation
 ```bash
 git clone https://github.com/GlobeCyber/Infornito
 ```
-### Requirements :
+### Requirements
 - Python 3
 - Tabulate
 
 ```bash
 pip install -r requirements.txt
 ```
-### Usage
+## Usage
 ```
   _______     __       _____     __
  / ___/ /__  / /  ___ / ___/_ __/ /  ___ ____

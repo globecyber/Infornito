@@ -1,16 +1,29 @@
 <p align="center">
 <img src="repo/infornito.png" ><br>
-<img src="https://img.shields.io/github/release-pre/GlobeCyber/Infornito.svg">
+<img src="https://img.shields.io/github/release-pre/GlobeCyber/Infornito.svg"> <img src="https://img.shields.io/github/license/GlobeCyber/Infornito.svg">
+
 </p>
 
 # Infornito 
 Infornito developed in Python 3.x and has as purpose extract all forensic interesting information of Chrome, Firefox, Safari browsers to be analyzed. Due to its Python 3.x developement, might not work properly in old Python versions, mainly with certain characters. Works under Unix and Windows 32/64 bits systems. Works in command line interface, so information dumps could be redirected by pipes with tools such as grep, awk, cut, sed... Infornito allows to visualize following sections, search customization and extract certain content.
 
+## Table of Contents
+
+- [Installation](#installation)
+	- [Requirements](#requirements)
+- [Usage](#usage)
+- [Profiles](#profiles)
+- [History](#history)
+- [Downloads](#downloads)
+- [Contributing](#contributing)
+- [License](#license)
+
+
 ### Installation
 ```bash
 git clone https://github.com/GlobeCyber/Infornito
 ```
-Requirements :
+### Requirements :
 - Python 3
 - Tabulate
 
@@ -79,3 +92,16 @@ python infornito.py downloads --pid 2
 ----------------- Summary ----------------
 Total url : 4
 ```
+
+
+## Contributing
+
+Feel free to dive in! [Open an issue](https://github.com/globecyber/Infornito/issues/new) or submit PRs.
+
+### Contributors
+
+This project exists thanks to all the people who contribute.
+
+## License
+
+[GPL](LICENSE) © GlobeCyber

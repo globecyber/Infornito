@@ -56,7 +56,8 @@ positional arguments:
 optional arguments:
   -h, --help            show this help message and exit
 ```
-### Profiles
+### [Profiles](#profiles)
+
 list browsers (Chrome, Firefox, Safari) profiles.
 ```bash
 python infornito.py profiles
@@ -70,7 +71,7 @@ python infornito.py profiles
    4  Default                       Chrome
    5  Default                       Safari
 ```
-### History
+### [History](#history)
 Show Profile url visit history.
 ```bash
 python infornito.py history --profile 2
@@ -86,7 +87,7 @@ python infornito.py history --profile 2
 Total url : 4
 ```
 
-### Downloads
+### [Downloads](#downloads)
 Show Profile downloaded files.
 ```bash
 python infornito.py downloads --profile 2
@@ -99,7 +100,7 @@ python infornito.py downloads --profile 2
 ----------------- Summary ----------------
 Total url : 4
 ```
-### Fingerprints
+### [Fingerprints](#fingerprints)
 Generate MD5, Sha1, Sha256 of profile database.
 ```bash
 python infornito.py fingerprints --profile 2

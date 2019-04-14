@@ -1,6 +1,6 @@
 <p align="center">
 <img src="repo/infornito.png" ><br>
-<img src="https://img.shields.io/badge/Python-3.x-blue.svg">
+<img src="https://img.shields.io/badge/Python-3.*-blue.svg">
 <img src="https://img.shields.io/github/license/GlobeCyber/Infornito.svg">
 <img src="https://img.shields.io/github/release-pre/GlobeCyber/Infornito.svg"> 
 <img src="https://img.shields.io/github/issues-raw/GlobeCyber/Infornito.svg">
@@ -94,8 +94,16 @@ python infornito.py downloads --pid 2
 ----------------- Summary ----------------
 Total url : 4
 ```
+### Fingerprints
+Generate MD5, Sha1, Sha256 of profile database.
+```
+Profile path : /Users/osx/Library/Application Support/Google/Chrome/Default
 
-
+[+] History
+        md5 : 6ae30770ae0ba886065286e729395gd2
+        sha1 : 1988f687376e60afa5d87cf90a05e14461cfbq01
+        sha256 : x26c07579f3c229d0bdcdeecb4e8da2efffa8d44a123b8ea4309edfcc5f9239r
+```
 ## Contributing
 
 Feel free to dive in! [Open an issue](https://github.com/globecyber/Infornito/issues/new) or submit PRs.

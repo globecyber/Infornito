@@ -1,7 +1,6 @@
 import sqlite3
 import os
 import plistlib
-from pprint import pprint
 from libs.general import general
 
 class safari(general):
@@ -62,3 +61,19 @@ class safari(general):
         if os.path.isdir(self.profiles_path):
             profiles.append({'path' : self.profiles_path, 'name': 'Default', 'browser': self.__class__.__name__})
         return profiles
+
+    def fingerprint(self, profile_path):
+        output = {
+            safari.config['hisotry_database_name']: {
+                'md5' : self.md5sum(os.path.join(profile_path, safari.config['hisotry_database_name'])),
+                'sha1' : self.sha1sum(os.path.join(profile_path, safari.config['hisotry_database_name'])),
+                'sha256' : self.sha256sum(os.path.join(profile_path, safari.config['hisotry_database_name']))
+            },
+            safari.config['download_database_file']: {
+                'md5' : self.md5sum(os.path.join(profile_path, safari.config['download_database_file'])),
+                'sha1' : self.sha1sum(os.path.join(profile_path, safari.config['download_database_file'])),
+                'sha256' : self.sha256sum(os.path.join(profile_path, safari.config['download_database_file']))
+            },
+            
+        }
+        return output

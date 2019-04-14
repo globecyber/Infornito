@@ -19,6 +19,7 @@ Infornito developed in Python 3.x and has as purpose extract all forensic intere
   - [Profiles](#profiles)
   - [History](#history)
   - [Downloads](#downloads)
+  - [Fingerprints](#fingerprints)
 - [Contributing](#contributing)
 - [License](#license)
 

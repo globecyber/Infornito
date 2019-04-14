@@ -1,9 +1,11 @@
 <p align="center">
   <img src="repo/infornito.png" ><br>
   <img src="https://img.shields.io/badge/Python-3.*-blue.svg">
-  <img src="https://img.shields.io/github/license/GlobeCyber/Infornito.svg">
-  <img src="https://img.shields.io/github/release-pre/GlobeCyber/Infornito.svg">
-  <img src="https://img.shields.io/github/issues-raw/GlobeCyber/Infornito.svg">
+  <a href="https://github.com/globecyber/Infornito/blob/master/LICENSE">
+  <img src="https://img.shields.io/github/license/GlobeCyber/Infornito.svg"></a>
+  <a href="https://github.com/globecyber/Infornito/releases"><img src="https://img.shields.io/github/release-pre/GlobeCyber/Infornito.svg"></a>
+  <a href="https://github.com/globecyber/Infornito/issues">
+  <img src="https://img.shields.io/github/issues-raw/GlobeCyber/Infornito.svg"></a>
 </p>
 
 # Infornito 

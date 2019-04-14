@@ -75,3 +75,13 @@ class chrome(general):
                 if(profile == 'Default' or 'Profile' in profile):
                     profiles.append({'path' : self.profiles_path + '/' + profile, 'name': profile, 'browser': self.__class__.__name__})
         return profiles
+
+    def fingerprint(self, profile_path):
+        output = {
+            chrome.config['hisotry_database_name']: {
+                'md5' : self.md5sum(os.path.join(profile_path, chrome.config['hisotry_database_name'])),
+                'sha1' : self.sha1sum(os.path.join(profile_path, chrome.config['hisotry_database_name'])),
+                'sha256' : self.sha256sum(os.path.join(profile_path, chrome.config['hisotry_database_name']))
+            }
+        }
+        return output

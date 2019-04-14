@@ -1,6 +1,7 @@
 import sqlite3
 import os
 import json
+
 from datetime import datetime
 from libs.general import general
 
@@ -82,3 +83,13 @@ class firefox(general):
             for profile in os.listdir(self.profiles_path):
                 profiles.append({'path' : self.profiles_path + '/' + profile, 'name': profile, 'browser': self.__class__.__name__})
         return profiles
+
+    def fingerprint(self, profile_path):
+        output = {
+            firefox.config['hisotry_database_name']: {
+                'md5' : self.md5sum(os.path.join(profile_path, firefox.config['hisotry_database_name'])),
+                'sha1' : self.sha1sum(os.path.join(profile_path, firefox.config['hisotry_database_name'])),
+                'sha256' : self.sha256sum(os.path.join(profile_path, firefox.config['hisotry_database_name']))
+            }
+        }
+        return output

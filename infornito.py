@@ -1,8 +1,10 @@
+#!/usr/bin/env python3
 import argparse
 from tabulate import tabulate
 from libs.firefox import firefox
 from libs.chrome import chrome
 from libs.safari import safari
+
 
 def banner():
     print('''
@@ -46,6 +48,18 @@ def parse_filters(filter_list):
         return filters
     return None
 
+def arg_fingerprint(args):
+    
+    profile_information = profile_info(int(args.profile[0]))
+    browser_type = profile_information['browser']
+
+    print('Profile path : {}\n'.format(profile_information['path']))
+    fingerprint_files = browser_modules[browser_type].fingerprint(profile_information['path'])
+    for filename, fingerprints in fingerprint_files.items():
+        print('[+] ' + filename)
+        for algorithm, fingerprint in fingerprints.items():
+            print('\t{} : {}'.format(algorithm, fingerprint))
+
 def arg_history(args):
     profile_information = profile_info(int(args.pid[0]))
     browser_type = profile_information['browser']
@@ -66,7 +80,6 @@ def arg_profiles(args):
         profiles = profile_info(args.id[0])
     except:
         profiles = profile_info()
-
 
     if args.id:
             browser_profile_list.append([args.id[0], profiles['name'], profiles['browser'].capitalize()])
@@ -103,6 +116,10 @@ history = subparsers.add_parser('history')
 history.add_argument('--pid', nargs=1, help='Select profile id')
 history.add_argument('--filter', action='append', help='add filter')
 history.set_defaults(func=arg_history)
+
+fingerprint = subparsers.add_parser('fingerprint')
+fingerprint.add_argument('--profile', nargs=1, help='Select profile id')
+fingerprint.set_defaults(func=arg_fingerprint)
 
 downloads = subparsers.add_parser('downloads')
 downloads.add_argument('--pid', nargs=1, help='Select profile id')

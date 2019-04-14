@@ -49,7 +49,7 @@ def parse_filters(filter_list):
     return None
 
 def arg_fingerprint(args):
-    
+
     profile_information = profile_info(int(args.profile[0]))
     browser_type = profile_information['browser']
 
@@ -61,7 +61,7 @@ def arg_fingerprint(args):
             print('\t{} : {}'.format(algorithm, fingerprint))
 
 def arg_history(args):
-    profile_information = profile_info(int(args.pid[0]))
+    profile_information = profile_info(int(args.profile[0]))
     browser_type = profile_information['browser']
     history = browser_modules[browser_type].history(profile_information['path'], filters=parse_filters(args.filter))
     for item in history:
@@ -91,7 +91,7 @@ def arg_profiles(args):
     print('Example : python3 infornito.py history -pid {ProfileID}')
 
 def arg_downloads(args):
-    profile_information = profile_info(int(args.pid[0]))
+    profile_information = profile_info(int(args.profile[0]))
     browser_type = profile_information['browser']
     downloads = browser_modules[browser_type].downloads(profile_information['path'])
     for item in downloads:
@@ -113,7 +113,7 @@ profiles.add_argument('--id', nargs=1, help='Select profile id')
 profiles.set_defaults(func=arg_profiles)
 
 history = subparsers.add_parser('history')
-history.add_argument('--pid', nargs=1, help='Select profile id')
+history.add_argument('--profile', nargs=1, help='Select profile id')
 history.add_argument('--filter', action='append', help='add filter')
 history.set_defaults(func=arg_history)
 
@@ -122,7 +122,7 @@ fingerprint.add_argument('--profile', nargs=1, help='Select profile id')
 fingerprint.set_defaults(func=arg_fingerprint)
 
 downloads = subparsers.add_parser('downloads')
-downloads.add_argument('--pid', nargs=1, help='Select profile id')
+downloads.add_argument('--profile', nargs=1, help='Select profile id')
 downloads.set_defaults(func=arg_downloads)
 
 args = parser.parse_args()

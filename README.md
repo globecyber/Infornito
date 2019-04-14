@@ -39,14 +39,14 @@ pip install -r requirements.txt
 / (_ / / _ \/ _ \/ -_) /__/ // / _ \/ -_) __/
 \___/_/\___/_.__/\__/\___/\_, /_.__/\__/_/
                          /___/
-            < Infornito v0.2 >
+            < Infornito v0.3 >
 
-usage: infornito.py [-h] {profiles,history,downloads} ...
+usage: infornito.py [-h] {profiles,history,downloads,fingerprints} ...
 
 Simple browser forensic tool
 
 positional arguments:
-  {profiles,history,downloads}
+  {profiles,history,downloads,fingerprints}
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -68,7 +68,7 @@ python infornito.py profiles
 ### History
 Show Profile url visit history.
 ```bash
-python infornito.py history --pid 2
+python infornito.py history --profile 2
 ```
 ```
 [18] https://www.google.com/ ( 2019-03-27 11:15:18 )
@@ -84,7 +84,7 @@ Total url : 4
 ### Downloads
 Show Profile downloaded files.
 ```bash
-python infornito.py downloads --pid 2
+python infornito.py downloads --profile 2
 ```
 ```
 [+] http://www.yahoo.com/img/logo.png -> /Users/myuser/Desktop/logo.png ( 2019-03-24 21:33:26 )

@@ -1,6 +1,7 @@
 <p align="center">
-  <img src="repo/infornito.png" ><br>
-  <img src="https://img.shields.io/badge/Python-3.*-blue.svg">
+  <a href="https://globecyber.com"><img src="repo/infornito.png" ><br></a>
+  <a href="https://www.python.org/downloads/">
+  <img src="https://img.shields.io/badge/Python-3.*-blue.svg"></a>
   <a href="https://github.com/globecyber/Infornito/blob/master/LICENSE">
   <img src="https://img.shields.io/github/license/GlobeCyber/Infornito.svg"></a>
   <a href="https://github.com/globecyber/Infornito/releases"><img src="https://img.shields.io/github/release-pre/GlobeCyber/Infornito.svg"></a>
@@ -30,7 +31,7 @@ Infornito developed in Python 3.x and has as purpose extract all forensic intere
 git clone https://github.com/GlobeCyber/Infornito
 ```
 ### Requirements
-- Python 3
+- [Python 3](https://www.python.org/downloads/)
 - Tabulate
 
 ```bash
@@ -121,4 +122,4 @@ This project exists thanks to all the people who contribute.
 
 ## License
 
-[GPL](LICENSE) © GlobeCyber
+[GPL](LICENSE) © [GlobeCyber](https://globecyber.com)

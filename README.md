@@ -96,6 +96,9 @@ Total url : 4
 ```
 ### Fingerprints
 Generate MD5, Sha1, Sha256 of profile database.
+```bash
+python infornito.py fingerprints --profile 2
+```
 ```
 Profile path : /Users/osx/Library/Application Support/Google/Chrome/Default
 

@@ -21,6 +21,7 @@ Infornito developed in Python 3.x and has as purpose extract all forensic intere
   - [Downloads](#downloads)
   - [Fingerprints](#fingerprints)
 - [Contributing](#contributing)
+- [Change Log](https://github.com/globecyber/Infornito/blob/master/CHANGELOG.md)
 - [License](#license)
 
 

@@ -20,7 +20,7 @@ Infornito developed in Python 3.x and has as purpose extract all forensic intere
   - [Profiles](#profiles)
   - [History](#history)
   - [Downloads](#downloads)
-  - [Fingerprints](#fingerprints)
+  - [Fingerprint](#fingerprints)
 - [Contributing](#contributing)
 - [Change Log](https://github.com/globecyber/Infornito/blob/master/CHANGELOG.md)
 - [License](#license)
@@ -100,10 +100,10 @@ python infornito.py downloads --profile 2
 ----------------- Summary ----------------
 Total url : 4
 ```
-### [Fingerprints](#fingerprints)
+### [Fingerprint](#fingerprint)
 Generate MD5, Sha1, Sha256 of profile database.
 ```bash
-python infornito.py fingerprints --profile 2
+python infornito.py fingerprint --profile 2
 ```
 ```
 Profile path : /Users/osx/Library/Application Support/Google/Chrome/Default

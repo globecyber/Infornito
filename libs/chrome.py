@@ -25,6 +25,7 @@ from libs.general import general
 class chrome(general):
     config = {
         'hisotry_database_name' : 'History',
+        'passwords_database_name' : 'Login Data',
         'platform_profile_path' : {
             'darwin' : 'Library/Application Support/Google/Chrome',
         }
@@ -96,11 +97,7 @@ class chrome(general):
         return profiles
 
     def fingerprint(self, profile_path):
-        output = {
-            chrome.config['hisotry_database_name']: {
-                'md5' : self.md5sum(os.path.join(profile_path, chrome.config['hisotry_database_name'])),
-                'sha1' : self.sha1sum(os.path.join(profile_path, chrome.config['hisotry_database_name'])),
-                'sha256' : self.sha256sum(os.path.join(profile_path, chrome.config['hisotry_database_name']))
-            }
+        return {
+            chrome.config['hisotry_database_name']: self.file_fingerprint(os.path.join(profile_path, chrome.config['hisotry_database_name'])),
+            chrome.config['passwords_database_name']: self.file_fingerprint(os.path.join(profile_path, chrome.config['passwords_database_name']))
         }
-        return output

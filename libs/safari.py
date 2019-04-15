@@ -82,17 +82,7 @@ class safari(general):
         return profiles
 
     def fingerprint(self, profile_path):
-        output = {
-            safari.config['hisotry_database_name']: {
-                'md5' : self.md5sum(os.path.join(profile_path, safari.config['hisotry_database_name'])),
-                'sha1' : self.sha1sum(os.path.join(profile_path, safari.config['hisotry_database_name'])),
-                'sha256' : self.sha256sum(os.path.join(profile_path, safari.config['hisotry_database_name']))
-            },
-            safari.config['download_database_file']: {
-                'md5' : self.md5sum(os.path.join(profile_path, safari.config['download_database_file'])),
-                'sha1' : self.sha1sum(os.path.join(profile_path, safari.config['download_database_file'])),
-                'sha256' : self.sha256sum(os.path.join(profile_path, safari.config['download_database_file']))
-            },
-            
+        return {
+            safari.config['hisotry_database_name']: self.file_fingerprint(os.path.join(profile_path, safari.config['hisotry_database_name'])),
+            safari.config['download_database_file']: self.file_fingerprint(os.path.join(profile_path, safari.config['download_database_file']))
         }
-        return output

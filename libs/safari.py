@@ -1,3 +1,22 @@
+### LICENCE ###
+# This file is part of Infornito project.
+# Infornito is a free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation.
+# Infornito is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details: <http://www.gnu.org/licenses/>
+
+### ABOUT Infornito ###
+# Infornito is browser forensic tool
+# Copyright (C) GlobeCyber <Github@GlobeCyber.com>
+
+### DISCLAIMER ###
+# We are not responsible for misuse of Infornito
+# Making a DNS tunnel to bypass a security policy may be forbidden
+# Do it at your own risks
+
 import sqlite3
 import os
 import plistlib

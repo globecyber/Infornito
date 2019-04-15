@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 ### LICENCE ###
-# This file is part of Infornito.
+# This file is part of Infornito project.
 # Infornito is a free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation.

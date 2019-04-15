@@ -28,6 +28,7 @@ class firefox(general):
 
     config = {
         'hisotry_database_name' : 'places.sqlite',
+        'passwords_database_name' : 'logins.json',
         'platform_profile_path' : {
             'windows' : 'AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\',
             'darwin' : 'Library/Application Support/Firefox/Profiles',
@@ -104,11 +105,6 @@ class firefox(general):
         return profiles
 
     def fingerprint(self, profile_path):
-        output = {
-            firefox.config['hisotry_database_name']: {
-                'md5' : self.md5sum(os.path.join(profile_path, firefox.config['hisotry_database_name'])),
-                'sha1' : self.sha1sum(os.path.join(profile_path, firefox.config['hisotry_database_name'])),
-                'sha256' : self.sha256sum(os.path.join(profile_path, firefox.config['hisotry_database_name']))
-            }
+        return {
+            firefox.config['hisotry_database_name']: self.file_fingerprint(os.path.join(profile_path, firefox.config['hisotry_database_name'])),
         }
-        return output

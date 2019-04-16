@@ -20,7 +20,8 @@ Infornito developed in Python 3.x and has as purpose extract all forensic intere
   - [Profiles](#profiles)
   - [History](#history)
   - [Downloads](#downloads)
-  - [Fingerprint](#fingerprints)
+  - [Fingerprint](#fingerprint)
+  - [Export](#export)
 - [Contributing](#contributing)
 - [Change Log](https://github.com/globecyber/Infornito/blob/master/CHANGELOG.md)
 - [License](#license)
@@ -46,12 +47,12 @@ pip install -r requirements.txt
                          /___/
             < Infornito v0.3 >
 
-usage: infornito.py [-h] {profiles,history,downloads,fingerprints} ...
+usage: infornito.py [-h] {profiles,history,downloads,fingerprint} ...
 
 Simple browser forensic tool
 
 positional arguments:
-  {profiles,history,downloads,fingerprints}
+  {profiles,history,downloads,fingerprint}
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -112,6 +113,22 @@ Profile path : /Users/osx/Library/Application Support/Google/Chrome/Default
         md5 : 6ae30770ae0ba886065286e729395gd2
         sha1 : 1988f687376e60afa5d87cf90a05e14461cfbq01
         sha256 : x26c07579f3c229d0bdcdeecb4e8da2efffa8d44a123b8ea4309edfcc5f9239r
+```
+
+### [Export](#export)
+Export browser profile to destination path.
+```
+python3 infornito.py export --profile 7 --to ~/Desktop/export
+```
+```
+[~] Profile ID : 7
+[~] Browser : Chrome
+[~] Profile name : Guest Profile
+[~] Destination path : /Users/myuser/Desktop/export/Chrome/Guest Profile/2019-04-16 13-50-34
+[~] Start exporting profile ...
+        [+] Exporting History : Successful
+        [+] Exporting Login Data : Successful
+        [+] Creating infornito.json : Successful
 ```
 ## Contributing
 

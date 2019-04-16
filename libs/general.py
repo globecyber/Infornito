@@ -64,3 +64,9 @@ class general():
             'sha256' : self.sha256sum(filepath)
         }
         return output
+
+    def fingerprint(self, profile_path):
+        output = {}
+        for (name, filename) in self.config['files'].items():
+            output[filename] = self.file_fingerprint(os.path.join(profile_path, filename))
+        return output

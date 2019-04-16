@@ -24,8 +24,10 @@ from libs.general import general
 
 class chrome(general):
     config = {
-        'hisotry_database_name' : 'History',
-        'passwords_database_name' : 'Login Data',
+        'files' : {
+            'histories' : 'History',
+            'passwords' : 'Login Data',
+        },
         'platform_profile_path' : {
             'darwin' : 'Library/Application Support/Google/Chrome',
         }
@@ -44,7 +46,7 @@ class chrome(general):
     def downloads(self, profile_path):
         # TODO : Filtering By : ['fileextension', 'date', 'daterange', 'domain']
         try:
-            connection = sqlite3.connect(os.path.join(profile_path, self.config['hisotry_database_name']))
+            connection = sqlite3.connect(os.path.join(profile_path, self.config['files']['histories']))
             db_cursor = connection.cursor()
             downloaded_files = db_cursor.execute("SELECT tab_url, target_path, start_time, total_bytes, state FROM downloads;").fetchall()
             downloads = []
@@ -71,7 +73,7 @@ class chrome(general):
 
     def history(self, profile_path):
         try:
-            connection = sqlite3.connect(os.path.join(profile_path, self.config['hisotry_database_name']))
+            connection = sqlite3.connect(os.path.join(profile_path, self.config['files']['histories']))
             db_cursor = connection.cursor()
             db_cursor.execute("SELECT url, visit_count, last_visit_time FROM urls ORDER BY visit_count;")
             urls = db_cursor.fetchall()
@@ -95,9 +97,3 @@ class chrome(general):
                 if(profile == 'Default' or 'Profile' in profile):
                     profiles.append({'path' : self.profiles_path + '/' + profile, 'name': profile, 'browser': self.__class__.__name__})
         return profiles
-
-    def fingerprint(self, profile_path):
-        return {
-            chrome.config['hisotry_database_name']: self.file_fingerprint(os.path.join(profile_path, chrome.config['hisotry_database_name'])),
-            chrome.config['passwords_database_name']: self.file_fingerprint(os.path.join(profile_path, chrome.config['passwords_database_name']))
-        }

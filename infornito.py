@@ -19,7 +19,11 @@
 # Making a DNS tunnel to bypass a security policy may be forbidden
 # Do it at your own risks
 
+import os
+import json
 import argparse
+from shutil import copyfile
+from datetime import datetime
 from tabulate import tabulate
 from libs.firefox import firefox
 from libs.chrome import chrome
@@ -79,6 +83,59 @@ def arg_fingerprint(args):
         print('[+] ' + filename)
         for algorithm, fingerprint in fingerprints.items():
             print('\t{} : {}'.format(algorithm, fingerprint))
+
+def export_profile(profile_id):
+    profile_information = profile_info(profile_id)
+    export_path = args.to[0]
+    current_time = datetime.utcnow().strftime('%Y-%m-%d %H-%M-%S')
+    final_path = os.path.join(export_path, profile_information['browser'].capitalize(), profile_information['name'], current_time)
+    browser_files = browser_modules[profile_information['browser']].config['files']
+    # Create folder with profile name if not exist
+    if not os.path.exists(final_path):
+        os.makedirs(final_path)
+    
+    print('[~] Profile ID : {}'.format(profile_id))
+    print('[~] Browser : {}'.format(profile_information['browser'].capitalize()))
+    print('[~] Profile name : {}'.format(profile_information['name']))
+    print('[~] Destination path : {}'.format(final_path))
+    print('[~] Start exporting profile ...')
+    # Copy important file to export path
+    for (name, filename) in browser_files.items():
+        print('\t[+] Exporting {} : '.format(filename), end='')
+        try:
+            copyfile(os.path.join(profile_information['path'], filename), os.path.join(final_path, filename))
+            print('Successful')
+        except:
+            print('Failed')
+    
+    # Create infornito metadata
+    print('\t[+] Creating infornito.json : ', end='')
+    metadata = {
+        'machine_name' : os.uname().nodename,
+        'platform' : os.uname().sysname,
+        'platform_version' : os.uname().version,
+        'arch' : os.uname().machine,
+        'export_time' : datetime.utcnow().strftime("%s")
+    }
+    try:
+        with open(os.path.join(final_path, 'infornito.json'), 'w') as outfile:  
+            json.dump(metadata, outfile)
+        print('Successful')
+    except:
+        print('Failed')
+
+
+def arg_export(args):
+    # Export all profiles if profile id not mentioned
+    if args.profile == None:
+        profiles = profile_info()
+        for profile_id in range(1,len(profiles)+1):
+            export_profile(profile_id)
+            print('\n------\n')
+    else:
+        export_profile(args.profile[0])
+    print()
+    pass
 
 def arg_history(args):
     profile_information = profile_info(int(args.profile[0]))
@@ -144,6 +201,11 @@ fingerprint.set_defaults(func=arg_fingerprint)
 downloads = subparsers.add_parser('downloads')
 downloads.add_argument('--profile', nargs=1, help='Select profile id')
 downloads.set_defaults(func=arg_downloads)
+
+export = subparsers.add_parser('export')
+export.add_argument('--profile', nargs=1, help='Select profile id')
+export.add_argument('--to', nargs=1, default=['export'], help='Destination path for export profile')
+export.set_defaults(func=arg_export)
 
 args = parser.parse_args()
 try:

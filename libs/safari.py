@@ -24,8 +24,10 @@ from libs.general import general
 
 class safari(general):
     config = {
-        'hisotry_database_name' : 'History.db',
-        'download_database_file' : 'Downloads.plist',
+        'files' : {
+            'histories' : 'History.db',
+            'downloads' : 'Downloads.plist'
+        },
         'platform_profile_path' : {
             'darwin' : 'Library/Safari/',
         }
@@ -37,7 +39,7 @@ class safari(general):
 
     def history(self, profile_path):
         try:
-            connection = sqlite3.connect(os.path.join(profile_path, self.config['hisotry_database_name']))
+            connection = sqlite3.connect(os.path.join(profile_path, self.config['files']['histories']))
             db_cursor = connection.cursor()
             db_cursor.execute("SELECT url, visit_count FROM history_items ORDER BY visit_count;")
             urls = db_cursor.fetchall()
@@ -55,7 +57,7 @@ class safari(general):
 
     def downloads(self, profile_path):
         try:
-            downloaded_files = plistlib.readPlist(os.path.join(profile_path, self.config['download_database_file']))
+            downloaded_files = plistlib.readPlist(os.path.join(profile_path, self.config['downloads']))
             downloads = []
             for download_item in downloaded_files['DownloadHistory']:
                 is_fully_download = False
@@ -80,9 +82,3 @@ class safari(general):
         if os.path.isdir(self.profiles_path):
             profiles.append({'path' : self.profiles_path, 'name': 'Default', 'browser': self.__class__.__name__})
         return profiles
-
-    def fingerprint(self, profile_path):
-        return {
-            safari.config['hisotry_database_name']: self.file_fingerprint(os.path.join(profile_path, safari.config['hisotry_database_name'])),
-            safari.config['download_database_file']: self.file_fingerprint(os.path.join(profile_path, safari.config['download_database_file']))
-        }

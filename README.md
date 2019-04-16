@@ -109,7 +109,20 @@ python infornito.py fingerprint --profile 2
 ```
 Profile path : /Users/osx/Library/Application Support/Google/Chrome/Default
 
+
 [+] History
+        md5 : 6ae30770ae0ba886065286e729395gd2
+        sha1 : 1988f687376e60afa5d87cf90a05e14461cfbq01
+        sha256 : x26c07579f3c229d0bdcdeecb4e8da2efffa8d44a123b8ea4309edfcc5f9239r
+[+] Login Data
+        md5 : 6ae30770ae0ba886065286e729395gd2
+        sha1 : 1988f687376e60afa5d87cf90a05e14461cfbq01
+        sha256 : x26c07579f3c229d0bdcdeecb4e8da2efffa8d44a123b8ea4309edfcc5f9239r
+[+] Cookies
+        md5 : 6ae30770ae0ba886065286e729395gd2
+        sha1 : 1988f687376e60afa5d87cf90a05e14461cfbq01
+        sha256 : x26c07579f3c229d0bdcdeecb4e8da2efffa8d44a123b8ea4309edfcc5f9239r
+[+] Web Data
         md5 : 6ae30770ae0ba886065286e729395gd2
         sha1 : 1988f687376e60afa5d87cf90a05e14461cfbq01
         sha256 : x26c07579f3c229d0bdcdeecb4e8da2efffa8d44a123b8ea4309edfcc5f9239r

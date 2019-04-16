@@ -114,17 +114,17 @@ Profile path : /Users/osx/Library/Application Support/Google/Chrome/Default
         sha1 : 1988f687376e60afa5d87cf90a05e14461cfbq01
         sha256 : x26c07579f3c229d0bdcdeecb4e8da2efffa8d44a123b8ea4309edfcc5f9239r
 [+] Login Data
-        md5 : 6ae30770ae0ba886065286e729395gd2
-        sha1 : 1988f687376e60afa5d87cf90a05e14461cfbq01
-        sha256 : x26c07579f3c229d0bdcdeecb4e8da2efffa8d44a123b8ea4309edfcc5f9239r
+        md5 : 7ce30770ae5ba886065286e729395g7d
+        sha1 : 67c8f687376e60afa5d87cf90a05e14461cfbc25
+        sha256 : g64c07579f3c229d0bdcdeecb4e8da2eggsa8d44a123b8ea4309edfcc5f92rc7
 [+] Cookies
-        md5 : 6ae30770ae0ba886065286e729395gd2
-        sha1 : 1988f687376e60afa5d87cf90a05e14461cfbq01
-        sha256 : x26c07579f3c229d0bdcdeecb4e8da2efffa8d44a123b8ea4309edfcc5f9239r
+        md5 : cx730770ae0ba886065286e729395a24
+        sha1 : 2748f687376e60afa5d87cf90a05e14461cfbc56
+        sha256 : ac3c07579f3c229d0bdcdeecb4e8da2efffa8d44a123b8ea4309edfcc5f92523
 [+] Web Data
-        md5 : 6ae30770ae0ba886065286e729395gd2
-        sha1 : 1988f687376e60afa5d87cf90a05e14461cfbq01
-        sha256 : x26c07579f3c229d0bdcdeecb4e8da2efffa8d44a123b8ea4309edfcc5f9239r
+        md5 : qc330770ae0ba886065286e729395cx4
+        sha1 : 6428f687376e60afa5c23cf90a05e14461cfbvr2
+        sha256 : 235c07579f3c229d0bdcdeecb4e8da2efffa8d44a123b8ea4309edfcc5f92gx4
 ```
 
 ### [Export](#export)

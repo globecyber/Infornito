@@ -27,8 +27,10 @@ from libs.general import general
 class firefox(general):
 
     config = {
-        'hisotry_database_name' : 'places.sqlite',
-        'passwords_database_name' : 'logins.json',
+        'files' : {
+            'histories' : 'places.sqlite',
+            'passwords' : 'logins.json',
+        },
         'platform_profile_path' : {
             'windows' : 'AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\',
             'darwin' : 'Library/Application Support/Firefox/Profiles',
@@ -50,7 +52,7 @@ class firefox(general):
         query = "SELECT url, visit_count, datetime(last_visit_date/1000000,'unixepoch') FROM moz_places"+query_filters+' ORDER BY visit_count;'
         print(query)
         # try:
-        connection = sqlite3.connect(os.path.join(profile_path, self.config['hisotry_database_name']))
+        connection = sqlite3.connect(os.path.join(profile_path, self.config['files']['histories']))
         db_cursor = connection.cursor()
         db_cursor.execute(query)
         urls = db_cursor.fetchall()
@@ -69,7 +71,7 @@ class firefox(general):
 
     def downloads(self, profile_path):
         try:
-            connection = sqlite3.connect(os.path.join(profile_path, self.config['hisotry_database_name']))
+            connection = sqlite3.connect(os.path.join(profile_path, self.config['files']['histories']))
             db_cursor = connection.cursor()
             downloaded_files = db_cursor.execute("SELECT places.url, basic_info.content, basic_info.dateAdded, extended_info.content FROM moz_annos AS basic_info JOIN moz_annos AS extended_info ON basic_info.place_id=extended_info.place_id JOIN moz_places as places ON basic_info.place_id=places.id WHERE basic_info.anno_attribute_id='4' AND extended_info.anno_attribute_id='6'").fetchall()
         
@@ -103,8 +105,3 @@ class firefox(general):
             for profile in os.listdir(self.profiles_path):
                 profiles.append({'path' : self.profiles_path + '/' + profile, 'name': profile, 'browser': self.__class__.__name__})
         return profiles
-
-    def fingerprint(self, profile_path):
-        return {
-            firefox.config['hisotry_database_name']: self.file_fingerprint(os.path.join(profile_path, firefox.config['hisotry_database_name'])),
-        }

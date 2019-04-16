@@ -26,7 +26,8 @@ class safari(general):
     config = {
         'files' : {
             'histories' : 'History.db',
-            'downloads' : 'Downloads.plist'
+            'downloads' : 'Downloads.plist',
+            'cookies' : 'Library/Cookies/Cookies.binarycookies'
         },
         'platform_profile_path' : {
             'darwin' : 'Library/Safari/',

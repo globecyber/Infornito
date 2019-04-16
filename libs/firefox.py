@@ -30,6 +30,7 @@ class firefox(general):
         'files' : {
             'histories' : 'places.sqlite',
             'passwords' : 'logins.json',
+            'cookies' : 'cookies.sqlite'
         },
         'platform_profile_path' : {
             'windows' : 'AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\',

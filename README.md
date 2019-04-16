@@ -45,7 +45,7 @@ pip install -r requirements.txt
 / (_ / / _ \/ _ \/ -_) /__/ // / _ \/ -_) __/
 \___/_/\___/_.__/\__/\___/\_, /_.__/\__/_/
                          /___/
-            < Infornito v0.3 >
+            < Infornito v0.4 >
 
 usage: infornito.py [-h] {profiles,history,downloads,fingerprint} ...
 

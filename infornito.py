@@ -110,14 +110,16 @@ def export_profile(profile_id):
     
     # Create infornito metadata
     print('\t[+] Creating infornito.json : ', end='')
-    metadata = {
-        'machine_name' : os.uname().nodename,
-        'platform' : os.uname().sysname,
-        'platform_version' : os.uname().version,
-        'arch' : os.uname().machine,
-        'export_time' : datetime.utcnow().strftime("%s")
-    }
     try:
+        metadata = {
+            'machine_name' : os.uname().nodename,
+            'platform' : os.uname().sysname,
+            'platform_version' : os.uname().version,
+            'arch' : os.uname().machine,
+            'export_time' : datetime.utcnow().strftime("%s"),
+            'files' : browser_modules[profile_information['browser']].fingerprint(profile_information['path'])
+        }
+
         with open(os.path.join(final_path, 'infornito.json'), 'w') as outfile:  
             json.dump(metadata, outfile)
         print('Successful')

@@ -27,6 +27,8 @@ class chrome(general):
         'files' : {
             'histories' : 'History',
             'passwords' : 'Login Data',
+            'cookies' : 'Cookies',
+            'autofills' : 'Web Data'
         },
         'platform_profile_path' : {
             'darwin' : 'Library/Application Support/Google/Chrome',

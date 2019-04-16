@@ -18,6 +18,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Time range
     - File extension
     - Domain / Path
+
+## [0.4] - 2019-04-17
+### Added
+- Add profile export parameter
+### Bug Fixes
+- Fix filtering error
+
 ## [0.3] - 2019-04-14
 ### Added
 - Start using changelog

@@ -37,7 +37,7 @@ def banner():
 / (_ / / _ \/ _ \/ -_) /__/ // / _ \/ -_) __/
 \___/_/\___/_.__/\__/\___/\_, /_.__/\__/_/   
                          /___/               
-            < Infornito v0.3 >
+            < Infornito v0.4 >
 ''')
 
 browser_modules = {
@@ -77,7 +77,7 @@ def arg_fingerprint(args):
     profile_information = profile_info(int(args.profile[0]))
     browser_type = profile_information['browser']
 
-    print('Profile path : {}\n'.format(profile_information['path']))
+    print('[~] Profile path : {}\n'.format(profile_information['path']))
     fingerprint_files = browser_modules[browser_type].fingerprint(profile_information['path'])
     for filename, fingerprints in fingerprint_files.items():
         print('[+] ' + filename)
@@ -140,7 +140,8 @@ def arg_export(args):
 def arg_history(args):
     profile_information = profile_info(int(args.profile[0]))
     browser_type = profile_information['browser']
-    history = browser_modules[browser_type].history(profile_information['path'], filters=parse_filters(args.filter))
+    # history = browser_modules[browser_type].history(profile_information['path'], filters=parse_filters(args.filter))
+    history = browser_modules[browser_type].history(profile_information['path'])
     for item in history:
         if item.get('last_visit'):
             print('[{}] {} ( {} )'.format(item['count'], item['url'], item['last_visit']))

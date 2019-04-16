@@ -44,13 +44,13 @@ class firefox(general):
         self.profiles_path = os.path.join(self.user_home, self.config['platform_profile_path'][self.platform_name])
 
     def history(self, profile_path, filters=None):
-        query_filters = ""
-        if filters:
-            query_filters = " WHERE "
-            if filters.get('domain'):
-                query_filters += "url LIKE 'http'"
+        # query_filters = ""
+        # if filters:
+        #     query_filters = " WHERE "
+        #     if filters.get('domain'):
+        #         query_filters += "url LIKE 'http'"
 
-        query = "SELECT url, visit_count, datetime(last_visit_date/1000000,'unixepoch') FROM moz_places"+query_filters+' ORDER BY visit_count;'
+        query = "SELECT url, visit_count, datetime(last_visit_date/1000000,'unixepoch') FROM moz_places ORDER BY visit_count;"
         print(query)
         # try:
         connection = sqlite3.connect(os.path.join(profile_path, self.config['files']['histories']))

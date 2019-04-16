@@ -121,14 +121,15 @@ Export browser profile to destination path.
 python3 infornito.py export --profile 7 --to ~/Desktop/export
 ```
 ```
-[~] Profile ID : 7
-[~] Browser : Chrome
-[~] Profile name : Guest Profile
-[~] Destination path : /Users/myuser/Desktop/export/Chrome/Guest Profile/2019-04-16 13-50-34
-[~] Start exporting profile ...
-        [+] Exporting History : Successful
-        [+] Exporting Login Data : Successful
-        [+] Creating infornito.json : Successful
+==== [5] Chrome (Default) ====
+[~] Profile path : /Users/osx/Library/Application Support/Google/Chrome/Default
+[~] Destination path : /Users/osx/Desktop/export/Chrome/Default/2019-04-16 19-35-04
+[~] Start exporting profile files ...
+	[+] Exporting History : Successful
+	[+] Exporting Login Data : Successful
+	[+] Exporting Cookies : Successful
+	[+] Exporting Web Data : Successful
+	[+] Creating infornito.json : Successful
 ```
 ## Contributing
 

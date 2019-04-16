@@ -94,11 +94,10 @@ def export_profile(profile_id):
     if not os.path.exists(final_path):
         os.makedirs(final_path)
     
-    print('[~] Profile ID : {}'.format(profile_id))
-    print('[~] Browser : {}'.format(profile_information['browser'].capitalize()))
-    print('[~] Profile name : {}'.format(profile_information['name']))
+    print('\n==== [{}] {} ({}) ===='.format(profile_id, profile_information['browser'].capitalize(), profile_information['name']))
+    print('[~] Profile path : {}'.format(profile_information['path']))
     print('[~] Destination path : {}'.format(final_path))
-    print('[~] Start exporting profile ...')
+    print('[~] Start exporting profile files ...')
     # Copy important file to export path
     for (name, filename) in browser_files.items():
         print('\t[+] Exporting {} : '.format(filename), end='')
@@ -133,7 +132,6 @@ def arg_export(args):
         profiles = profile_info()
         for profile_id in range(1,len(profiles)+1):
             export_profile(profile_id)
-            print('\n------\n')
     else:
         export_profile(args.profile[0])
     print()

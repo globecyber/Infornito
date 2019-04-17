@@ -178,6 +178,9 @@ def arg_history(args):
         if query_filters.get('filetype'):
             history = [item for item in history if re.search(r'^https?:\/\/.*\/.*\.('+query_filters.get('filetype').replace(',','|')+')$', item['url'])]
 
+        if query_filters.get('port'):
+            history = [item for item in history if re.search(r'^https?:\/\/.*:('+query_filters.get('port').replace(',','|')+')\/.*.$', item['url'])]
+
     # Print Outputs
     for item in history:
         if item.get('last_visit'):

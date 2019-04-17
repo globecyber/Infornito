@@ -22,6 +22,8 @@
 import os
 import json
 import argparse
+import re
+import urllib.parse
 from shutil import copyfile
 from datetime import datetime
 from tabulate import tabulate
@@ -46,6 +48,9 @@ browser_modules = {
     'safari': safari()
 }
 
+def _urldecode(string):
+    return urllib.parse.unquote(string)
+
 def profile_info(profile_id=None):
     browsers_profiles_data = []
     for browser_name, browser_module in browser_modules.items():
@@ -66,8 +71,11 @@ def parse_filters(filter_list):
     if filter_list:
         filters = {}
         for filter_item in filter_list:
-            extract_filter = filter_item.split('=')
-            filters[extract_filter[0]] = extract_filter[1]
+            if '=' in filter_item:
+                extract_filter = filter_item.split('=')
+                filters[extract_filter[0]] = extract_filter[1]
+            else:
+                filters[filter_item] = True
         
         return filters
     return None
@@ -125,7 +133,6 @@ def export_profile(profile_id):
     except:
         print('Failed')
 
-
 def arg_export(args):
     # Export all profiles if profile id not mentioned
     if args.profile == None:
@@ -134,14 +141,29 @@ def arg_export(args):
             export_profile(profile_id)
     else:
         export_profile(args.profile[0])
-    print()
-    pass
 
 def arg_history(args):
     profile_information = profile_info(int(args.profile[0]))
     browser_type = profile_information['browser']
-    # history = browser_modules[browser_type].history(profile_information['path'], filters=parse_filters(args.filter))
     history = browser_modules[browser_type].history(profile_information['path'])
+    query_filters = parse_filters(args.filter)
+
+    if args.urldecode or query_filters.get('xss') or query_filters.get('lfi') or query_filters.get('sqli'):
+        for index, item in enumerate(history):
+            history[index]['url'] = _urldecode(item['url'])
+    
+    # Filter Output
+    if query_filters != None:
+
+        if query_filters.get('ip'):
+            if query_filters.get('ip') == True :
+                history = [item for item in history if re.search(r'^(https?:\/\/)?\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(:\d{1,5})?(\/.*)?$', item['url'])]
+            elif query_filters.get('ip') == 'lan' :
+                history = [item for item in history if re.search(r'^(https?:\/\/)?((127\.\d{1,3}\.\d{1,3}\.\d{1,3})|(192\.168\.\d{1,3}\.\d{1,3})|(10\.\d{1,3}\.\d{1,3}\.\d{1,3})|(172\.1[6-9]\.\d{1,3}\.\d{1,3})|(172\.2[0-9]\.\d{1,3}\.\d{1,3})|(172\.3[0-1]\.\d{1,3}\.\d{1,3}))(:\d{1,5})?(\/.*)?$', item['url'])]
+            else:
+                history = [item for item in history if re.search(r'^(https?:\/\/)?('+query_filters.get('ip').replace(',','|')+')(:\d{1,5})?(\/.*)?$', item['url'])]
+
+    # Print Outputs
     for item in history:
         if item.get('last_visit'):
             print('[{}] {} ( {} )'.format(item['count'], item['url'], item['last_visit']))
@@ -193,6 +215,7 @@ profiles.set_defaults(func=arg_profiles)
 history = subparsers.add_parser('history')
 history.add_argument('--profile', nargs=1, help='Select profile id')
 history.add_argument('--filter', action='append', help='add filter')
+history.add_argument('--urldecode', action='store_true', help='url decode hisotries')
 history.set_defaults(func=arg_history)
 
 fingerprint = subparsers.add_parser('fingerprint')

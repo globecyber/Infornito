@@ -163,6 +163,9 @@ def arg_history(args):
             else:
                 history = [item for item in history if re.search(r'^(https?:\/\/)?('+query_filters.get('ip').replace(',','|')+')(:\d{1,5})?(\/.*)?$', item['url'])]
 
+        if query_filters.get('tld'):
+            history = [item for item in history if re.search(r'^(https?:\/\/)?(\w*\.)*(' + query_filters.get('tld').replace(',','|') + ')(\/.*)?$', item['url'])]
+
     # Print Outputs
     for item in history:
         if item.get('last_visit'):

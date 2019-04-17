@@ -174,6 +174,9 @@ def arg_history(args):
 
         if query_filters.get('protocol'):
             history = [item for item in history if re.search(r'^'+query_filters.get('protocol')+':\/\/.*', item['url'])]
+    
+        if query_filters.get('filetype'):
+            history = [item for item in history if re.search(r'^https?:\/\/.*\/.*\.('+query_filters.get('filetype').replace(',','|')+')$', item['url'])]
 
     # Print Outputs
     for item in history:

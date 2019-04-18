@@ -196,6 +196,11 @@ def arg_history(args):
         if query_filters.get('lfi') == True :
             history = [item for item in history if re.search(r'''(?:etc\/\W*passwd)|(?:(?:\/|\\)?\.\.+(\/|\\)(?:\.+)?)''', item['url'], re.IGNORECASE)]
 
+        # if query_filters.get('totalvisit'):
+        #     print(query_filters.get('totalvisit')) 
+        #     exit()
+            # history = [item for item in history if item['count'] > ]
+
     # Print Outputs
     for item in history:
         if item.get('last_visit'):

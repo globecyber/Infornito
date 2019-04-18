@@ -19,6 +19,7 @@
 
 import sqlite3
 import os
+import platform
 import plistlib
 from libs.general import general
 
@@ -36,7 +37,8 @@ class safari(general):
 
     def __init__(self):
         general.__init__(self)
-        self.profiles_path = os.path.join(self.user_home, self.config['platform_profile_path'][self.platform_name])
+        if platform.system().lower() == 'darwin':
+            self.profiles_path = os.path.join(self.user_home, self.config['platform_profile_path'][self.platform_name])
 
     def history(self, profile_path):
         try:

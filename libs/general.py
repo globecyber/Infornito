@@ -24,7 +24,7 @@ import hashlib
 class general():
     def __init__(self):
         self.platform_name = platform.system().lower()
-        self.user_home = os.environ['HOME']
+        self.user_home = os.path.expanduser("~")
 
     def set_profiles_path(self, path):
         self.profiles_path = path
@@ -68,5 +68,6 @@ class general():
     def fingerprint(self, profile_path):
         output = {}
         for (name, filename) in self.config['files'].items():
-            output[filename] = self.file_fingerprint(os.path.join(profile_path, filename))
+            if os.path.isfile(os.path.join(profile_path, filename)):
+                output[filename] = self.file_fingerprint(os.path.join(profile_path, filename))
         return output

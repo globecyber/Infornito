@@ -22,6 +22,7 @@
 import os
 import json
 import argparse
+import platform
 import re
 import urllib.parse
 from shutil import copyfile
@@ -39,7 +40,7 @@ def banner():
 / (_ / / _ \/ _ \/ -_) /__/ // / _ \/ -_) __/
 \___/_/\___/_.__/\__/\___/\_, /_.__/\__/_/   
                          /___/               
-            < Infornito v0.4 >
+            < Infornito v1.0 >
 ''')
 
 browser_modules = {
@@ -52,8 +53,12 @@ def _urldecode(string):
     return urllib.parse.unquote(string)
 
 def profile_info(profile_id=None):
+
     browsers_profiles_data = []
     for browser_name, browser_module in browser_modules.items():
+        if browser_name == 'safari' and platform.system().lower() != 'darwin':
+            continue
+
         for profile in browser_module.get_profiles():
             browsers_profiles_data.append(profile)
 
@@ -78,7 +83,7 @@ def parse_filters(filter_list):
                 filters[filter_item] = True
         
         return filters
-    return None
+    return {}
 
 def arg_fingerprint(args):
 
@@ -119,11 +124,10 @@ def export_profile(profile_id):
     print('\t[+] Creating infornito.json : ', end='')
     try:
         metadata = {
-            'machine_name' : os.uname().nodename,
-            'platform' : os.uname().sysname,
-            'platform_version' : os.uname().version,
-            'arch' : os.uname().machine,
-            'export_time' : datetime.utcnow().strftime("%s"),
+            'machine_name' : os.getlogin(),
+            'platform' : platform.system().lower(),
+            'platform_version' : platform.platform(),
+            'export_time' : datetime.utcnow().timestamp(),
             'files' : browser_modules[profile_information['browser']].fingerprint(profile_information['path'])
         }
 
@@ -143,6 +147,7 @@ def arg_export(args):
         export_profile(args.profile[0])
 
 def arg_history(args):
+
     profile_information = profile_info(int(args.profile[0]))
     browser_type = profile_information['browser']
     history = browser_modules[browser_type].history(profile_information['path'])
@@ -151,7 +156,7 @@ def arg_history(args):
     if args.urldecode or query_filters.get('xss') or query_filters.get('lfi') or query_filters.get('sqli'):
         for index, item in enumerate(history):
             history[index]['url'] = _urldecode(item['url'])
-    
+
     # Filter Output
     if query_filters != None:
 

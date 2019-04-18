@@ -20,7 +20,6 @@
 import sqlite3
 import os
 import json
-
 from datetime import datetime
 from libs.general import general
 
@@ -98,5 +97,5 @@ class firefox(general):
         profiles = []
         if os.path.isdir(self.profiles_path):
             for profile in os.listdir(self.profiles_path):
-                profiles.append({'path' : self.profiles_path + '/' + profile, 'name': profile, 'browser': self.__class__.__name__})
+                profiles.append({'path' : os.path.join(self.profiles_path, profile), 'name': profile, 'browser': self.__class__.__name__})
         return profiles

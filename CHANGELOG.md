@@ -23,6 +23,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - File types
     - Regex
 
+## [1.0] - 2019-04-19
+### Added
+- Added windows support
+
+### Bug Fixes
+- Fixed windows related datetime problem
+- Fixed windows safari module crash problem
+
 ## [0.5] - 2019-04-18
 ### Added
 - Filter browser history by

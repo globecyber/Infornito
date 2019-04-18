@@ -32,6 +32,7 @@ class chrome(general):
         },
         'platform_profile_path' : {
             'darwin' : 'Library/Application Support/Google/Chrome',
+            'windows': 'AppData\\Local\\Google\\Chrome\\User Data'
         }
     }
 
@@ -94,8 +95,10 @@ class chrome(general):
 
     def get_profiles(self):
         profiles = []
+
         if os.path.isdir(self.profiles_path):
             for profile in os.listdir(self.profiles_path):
                 if(profile == 'Default' or 'Profile' in profile):
-                    profiles.append({'path' : self.profiles_path + '/' + profile, 'name': profile, 'browser': self.__class__.__name__})
+                    profiles.append({'path' : os.path.join(self.profiles_path,profile), 'name': profile, 'browser': self.__class__.__name__})
+
         return profiles

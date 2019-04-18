@@ -9,9 +9,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add support for opera
 - Collect all profiles to infornito database
 - Extract saved passwords
-- Filter queries
+- Filter history queries
     - Time range
-
+    - Total visit
+- Filter file download queries
+    - Time range
+    - Total visit
+    - File extension
+    - Domain / TLD
+    - IP ( Lan / Specific IP )
+    - Protocol
+    - Port
+    - File types
+    - Regex
 
 ## [0.5] - 2019-04-18
 ### Added

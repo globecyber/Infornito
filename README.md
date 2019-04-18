@@ -106,7 +106,7 @@ Filter list :
   - filter specific ip address (--filter ip=10.10.20.240)
 - Protocol : filter urls with specific protocol (--filter protocol=https)
 - Wordpress : filter wordpress websites (--filter wordpress)
-- Regex : filter urls by regular expression (--filter regex=yahoo\.*)
+- Regex : filter urls by regular expression (--filter "regex=yahoo\.*")
 - Sql injection : filter urls with sql injection attack pattern (--filter sqli)
 - LFI : filter urls with local file inclusion attack pattern (--filter lfi)
 - XSS : filter urls with cross site scripting attack pattern (--filter xss)

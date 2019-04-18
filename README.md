@@ -45,11 +45,11 @@ pip install -r requirements.txt
 / (_ / / _ \/ _ \/ -_) /__/ // / _ \/ -_) __/
 \___/_/\___/_.__/\__/\___/\_, /_.__/\__/_/
                          /___/
-            < Infornito v0.4 >
+            < Infornito v1.0 >
 
 usage: infornito.py [-h] {profiles,history,downloads,fingerprint} ...
 
-Simple browser forensic tool
+Browser forensic tool
 
 positional arguments:
   {profiles,history,downloads,fingerprint}

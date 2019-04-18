@@ -248,10 +248,10 @@ def arg_downloads(args):
 
 banner()
 
-parser = argparse.ArgumentParser(description='Simple browser forensic tool')
+parser = argparse.ArgumentParser(description='Browser forensic tool')
 subparsers = parser.add_subparsers()
 
-profiles = subparsers.add_parser('profiles', description='Simple browser forensic tool')
+profiles = subparsers.add_parser('profiles', description='List browsers profiles')
 profiles.add_argument('--id', nargs=1, help='Select profile id')
 profiles.set_defaults(func=arg_profiles)
 

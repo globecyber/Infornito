@@ -9,21 +9,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add support for opera
 - Collect all profiles to infornito database
 - Extract saved passwords
-- Detect web attacks
-    - Sql injection (✅)
-    - XSS (✅)
-    - LFI (✅)
-- Filter queries 
-    - Time range (✅)
-    - File extension (✅)
-    - Domain / TLD (✅)
-    - IP ( Lan / Specific IP ) (✅)
-    - Protocols (✅)
-    - Port (✅) 
-    - File types (✅)
-    - Admin panels (✅)
-    - Wordpress (✅)
-    - Regex (✅)
+- Filter queries
+    - Time range
+
+
+## [0.5] - 2019-04-18
+### Added
+- Filter browser history by
+    - File extension
+    - Domain / TLD
+    - IP ( Lan / Specific IP )
+    - Protocol
+    - Port
+    - File types
+    - Admin panels
+    - Wordpress
+    - Regex
+- Detect web attacks from browser history
+    - Sql injection
+    - XSS
+    - LFI
 
 ## [0.4] - 2019-04-17
 ### Added

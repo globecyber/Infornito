@@ -87,6 +87,29 @@ python infornito.py history --profile 2
 ----------------- Summary ----------------
 Total url : 4
 ```
+You can filter outputs by --filter argument to find something you looking for, for example :
+```bash
+python infornito.py history --profile 2 --filter domain=target.com --filter filetype=pdf --filter protocols=https --filter port=4880
+```
+```
+[12] https://www.target.com:4880/documents/secret.pdf ( 2019-03-27 11:15:18 )
+```
+Filter list :
+- Domain : filter domain name (--filter domain=target.com)
+- Port : filter port number (--filter port=4880,3329)
+- File Type : filter file extension (--filter filetype=exe,pdf)
+- TLD : filter domain tld (--filter tld=com,us)
+- Admin Panels : filter all urls related to admin area (--filter adminpanels)
+- IP
+  - filter ip urls (--filter ip)
+  - filter lan ip address range (--filter ip=lan)
+  - filter specific ip address (--filter ip=10.10.20.240)
+- Protocol : filter urls with specific protocol (--filter protocol=https)
+- Wordpress : filter wordpress websites (--filter wordpress)
+- Regex : filter urls by regular expression (--filter regex=yahoo\.*)
+- Sql injection : filter urls with sql injection attack pattern (--filter sqli)
+- LFI : filter urls with local file inclusion attack pattern (--filter lfi)
+- XSS : filter urls with cross site scripting attack pattern (--filter xss)
 
 ### [Downloads](#downloads)
 Show Profile downloaded files.

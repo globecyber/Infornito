@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 - Loading offline profile
 - Adding support for opera
+- CSV output
 - Extract saved passwords
 - Filter history queries
     - Time range

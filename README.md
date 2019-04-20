@@ -33,11 +33,7 @@ git clone https://github.com/GlobeCyber/Infornito
 ```
 ### Requirements
 - [Python 3](https://www.python.org/downloads/)
-- Tabulate
 
-```bash
-pip install -r requirements.txt
-```
 ## Usage
 ```
   _______     __       _____     __
@@ -64,13 +60,11 @@ list browsers (Chrome, Firefox, Safari) profiles.
 python infornito.py profiles
 ```
 ```
-  ID  Path                          Browser Type
-----  ----------------------------  --------------
-   1  21a6irx65.default             Firefox
-   2  je9q4srv.dev-edition-default  Firefox
-   3  Profile 1                     Chrome
-   4  Default                       Chrome
-   5  Default                       Safari
+1 => Firefox (21a6irx65.default)
+2 => Firefox (je9q4srv.dev-edition-default)
+3 => Chrome (Profile 1)
+4 => Chrome (Default)
+5 => Safari (Default)
 ```
 ### [History](#history)
 Show Profile url visit history.

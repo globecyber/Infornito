@@ -27,7 +27,6 @@ import re
 import urllib.parse
 from shutil import copyfile
 from datetime import datetime
-from tabulate import tabulate
 from libs.firefox import firefox
 from libs.chrome import chrome
 from libs.safari import safari
@@ -146,11 +145,26 @@ def arg_export(args):
     else:
         export_profile(args.profile[0])
 
+def get_history(profile_id=None):
+    if profile_id:
+        profile_information = profile_info(int(args.profile[0]))
+        history = browser_modules[profile_information['browser']].history(profile_information['path'])
+        return history
+    else:
+        histories = []
+        profiles = profile_info()
+        for profile_id in range(1,len(profiles)+1):
+            profile_information = profile_info(profile_id)
+            print(profile_information)
+            histories.append(browser_modules[profile_information['browser']].history(profile_information['path']))
+        return histories
+
 def arg_history(args):
 
-    profile_information = profile_info(int(args.profile[0]))
-    browser_type = profile_information['browser']
-    history = browser_modules[browser_type].history(profile_information['path'])
+    if args.profile == None:
+        history = get_history()
+    else:
+        history = get_history(args.profile[0])
     query_filters = parse_filters(args.filter)
 
     if args.urldecode or query_filters.get('xss') or query_filters.get('lfi') or query_filters.get('sqli'):
@@ -230,7 +244,8 @@ def arg_profiles(args):
         for (key, profile_information) in enumerate(profiles):
             browser_profile_list.append([key+1, profile_information['name'], profile_information['browser'].capitalize()])
 
-    print(tabulate(browser_profile_list, headers=['ID', 'Profile Name', 'Browser Type']),'\n')
+    for profile in browser_profile_list:
+        print('{} => {} ({})'.format(profile[0],profile[2],profile[1]))
     print('Example : python3 infornito.py history -pid {ProfileID}')
 
 def arg_downloads(args):

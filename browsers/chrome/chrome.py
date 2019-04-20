@@ -28,7 +28,14 @@ class chrome(general):
             'histories' : 'History',
             'passwords' : 'Login Data',
             'cookies' : 'Cookies',
-            'autofills' : 'Web Data'
+            'autofills' : 'Web Data',
+            'configurations' : 'Preferences',
+            'favicons' : 'Favicons',
+            'bookmarks' : 'Bookmarks',
+            'current_session' : 'Current Session',
+            'last_session' : 'Last Session',
+            'current_tabs' : 'Current Tabs',
+            'last_tabs' : 'Last Tabs'
         },
         'platform_profile_path' : {
             'darwin' : 'Library/Application Support/Google/Chrome',

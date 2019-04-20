@@ -117,8 +117,8 @@ def export_profile(profile_id):
         try:
             copyfile(os.path.join(profile_information['path'], filename), os.path.join(final_path, filename))
             print('Successful')
-        except:
-            print('Failed')
+        except Exception as e:
+            print('Failed' + str(e))
     
     # Create infornito metadata
     print('\t[+] Creating infornito.json : ', end='')
@@ -134,8 +134,8 @@ def export_profile(profile_id):
         with open(os.path.join(final_path, 'infornito.json'), 'w') as outfile:  
             json.dump(metadata, outfile)
         print('Successful')
-    except:
-        print('Failed')
+    except Exception as e:
+        print('Failed' + str(e))
 
 def arg_export(args):
     # Export all profiles if profile id not mentioned

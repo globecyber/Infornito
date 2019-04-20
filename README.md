@@ -149,7 +149,7 @@ Profile path : /Users/osx/Library/Application Support/Google/Chrome/Default
 ```
 
 ### [Export](#export)
-Export browser profile to destination path.
+Export browser profiles to destination path.
 ```
 python3 infornito.py export --profile 7 --to ~/Desktop/export
 ```

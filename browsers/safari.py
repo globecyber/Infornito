@@ -21,7 +21,7 @@ import sqlite3
 import os
 import platform
 import plistlib
-from libs.general import general
+from browsers.general import general
 
 class safari(general):
     config = {

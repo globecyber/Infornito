@@ -25,12 +25,12 @@ import argparse
 import platform
 import re
 import urllib.parse
-import csv
 from shutil import copyfile
 from datetime import datetime
-from libs.firefox import firefox
-from libs.chrome import chrome
-from libs.safari import safari
+from browsers.firefox import firefox
+from browsers.chrome import chrome
+from browsers.safari import safari
+from libs.exporter import export_csv
 
 
 def banner():
@@ -231,17 +231,8 @@ def arg_history(args):
                 output_filename = 'infornito_profiles_{}.csv'.format(current_time)
             
             final_path = os.path.join(args.to[0], 'history')
-            if not os.path.exists(final_path):
-                os.makedirs(final_path)
-            
-            with open(os.path.join(final_path,output_filename), 'w') as outcsv:
-
-                writer = csv.writer(outcsv, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
-                writer.writerow(['url', 'lastvisit', 'total_visit'])
-                for item in history:
-                    #Write item to outcsv
-                    writer.writerow([item['url'].replace(',','%2C'), item['count'], item['last_visit']])
-                print('[+] Done')
+            export_csv(final_path, output_filename, ['url', 'last_visit', 'count'], history)
+            print('[+] Done')
         except Exception as e:
             print('[-]' + str(e))
         

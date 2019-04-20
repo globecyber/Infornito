@@ -20,7 +20,7 @@
 import sqlite3
 import os
 import datetime
-from libs.general import general
+from browsers.general import general
 
 class chrome(general):
     config = {

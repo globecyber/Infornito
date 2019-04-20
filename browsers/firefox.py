@@ -21,7 +21,7 @@ import sqlite3
 import os
 import json
 from datetime import datetime
-from libs.general import general
+from browsers.general import general
 
 class firefox(general):
 

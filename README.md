@@ -88,7 +88,7 @@ python infornito.py history --profile 2 --filter domain=target.com --filter file
 ```
 [12] https://www.target.com:4880/documents/secret.pdf ( 2019-03-27 11:15:18 )
 ```
-Filter list :
+### Filter histories
 - Domain : filter domain name (--filter domain=target.com)
 - Port : filter port number (--filter port=4880,3329)
 - File Type : filter file extension (--filter filetype=exe,pdf)
@@ -104,7 +104,11 @@ Filter list :
 - Sql injection : filter urls with sql injection attack pattern (--filter sqli)
 - LFI : filter urls with local file inclusion attack pattern (--filter lfi)
 - XSS : filter urls with cross site scripting attack pattern (--filter xss)
-
+### Export histories
+Export histories to csv file.
+```bash
+python infornito.py history --profile 2 --export csv --to ~/Desktop/export
+```
 ### [Downloads](#downloads)
 Show Profile downloaded files.
 ```bash

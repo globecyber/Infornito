@@ -53,10 +53,9 @@ class safari(general):
                     'count' : str(url[1]),
                 })
             db_cursor.close()
-            return parsed_histories        
+            return {'status': True, 'data': parsed_histories}
         except Exception as error:
-            print('Error : ' + str(error))
-            exit()
+            return {'status': False, 'data': str(error)}
 
     def downloads(self, profile_path):
         try:

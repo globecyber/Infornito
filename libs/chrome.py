@@ -88,10 +88,9 @@ class chrome(general):
                     'last_visit' : str(self._convert_date_from_webkit(url[2]))
                 })
             db_cursor.close()
-            return parsed_histories        
+            return {'status': True, 'data': parsed_histories}
         except Exception as error:
-            print('Error : ' + str(error))
-            exit()
+            return {'status': False, 'data': str(error)}
 
     def get_profiles(self):
         profiles = []

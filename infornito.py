@@ -25,6 +25,7 @@ import argparse
 import platform
 import re
 import urllib.parse
+import csv
 from shutil import copyfile
 from datetime import datetime
 from libs.firefox import firefox
@@ -145,32 +146,37 @@ def arg_export(args):
     else:
         export_profile(args.profile[0])
 
-def get_history(profile_id=None):
-    if profile_id:
-        profile_information = profile_info(int(args.profile[0]))
-        history = browser_modules[profile_information['browser']].history(profile_information['path'])
-        return history
-    else:
-        histories = []
-        profiles = profile_info()
-        for profile_id in range(1,len(profiles)+1):
-            profile_information = profile_info(profile_id)
-            print(profile_information)
-            histories.append(browser_modules[profile_information['browser']].history(profile_information['path']))
-        return histories
+def get_history(profile_id):
+    profile_information = profile_info(profile_id)
+    history = browser_modules[profile_information['browser']].history(profile_information['path'])
+    return history
 
 def arg_history(args):
 
+    history = []
     if args.profile == None:
-        history = get_history()
+        print('[~] Getting profiles history ...')
+        profiles = profile_info()
+        for profile_id in range(1,len(profiles)+1):
+            history_response = get_history(profile_id)
+            if not history_response['status']:
+                print('[-] Profile #{} : {}'.format(profile_id, history_response['data']))
+            else:
+                history += history_response['data']
     else:
-        history = get_history(args.profile[0])
+        history_response = get_history(str(args.profile[0]))
+        if not history_response['status']:
+            print('[-] {}'.format(history_response['data']))
+            exit()
+        
+        history = history_response['data']
+
     query_filters = parse_filters(args.filter)
 
     if args.urldecode or query_filters.get('xss') or query_filters.get('lfi') or query_filters.get('sqli'):
         for index, item in enumerate(history):
             history[index]['url'] = _urldecode(item['url'])
-
+    
     # Filter Output
     if query_filters != None:
 
@@ -215,20 +221,43 @@ def arg_history(args):
         if query_filters.get('lfi') == True :
             history = [item for item in history if re.search(r'''(?:etc\/\W*passwd)|(?:(?:\/|\\)?\.\.+(\/|\\)(?:\.+)?)''', item['url'], re.IGNORECASE)]
 
-        # if query_filters.get('totalvisit'):
-        #     print(query_filters.get('totalvisit')) 
-        #     exit()
-            # history = [item for item in history if item['count'] > ]
+    if args.export != None:
+        print('[~] Exporting histories to csv file ...')
+        try:
+            current_time = datetime.utcnow().strftime('%Y-%m-%d %H-%M-%S')
+            if args.profile != None:
+                output_filename = 'infornito_profile_{}_{}.csv'.format(str(args.profile[0]),current_time)
+            else:
+                output_filename = 'infornito_profiles_{}.csv'.format(current_time)
+            
+            final_path = os.path.join(args.to[0], 'history')
+            if not os.path.exists(final_path):
+                os.makedirs(final_path)
+            
+            with open(os.path.join(final_path,output_filename), 'w') as outcsv:
 
+                writer = csv.writer(outcsv, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
+                writer.writerow(['url', 'lastvisit', 'total_visit'])
+                for item in history:
+                    #Write item to outcsv
+                    writer.writerow([item['url'].replace(',','%2C'), item['count'], item['last_visit']])
+                print('[+] Done')
+        except Exception as e:
+            print('[-]' + str(e))
+        
     # Print Outputs
-    for item in history:
-        if item.get('last_visit'):
-            print('[{}] {} ( {} )'.format(item['count'], item['url'], item['last_visit']))
-        else:
-            print('[{}] {}'.format(item['count'], item['url']))
-    print('\n[Total visit] URL ( Last Visit )')
-    print('----------------- Summary ----------------')
-    print('Total url : {}'.format(len(history)))
+    else:
+        try:
+            for item in history:
+                if item.get('last_visit'):
+                    print('[{}] {} ( {} )'.format(item['count'], item['url'], item['last_visit']))
+                else:
+                    print('[{}] {}'.format(item['count'], item['url']))
+            print('\n[Total visit] URL ( Last Visit )')
+            print('----------------- Summary ----------------')
+            print('Total url : {}'.format(len(history)))
+        except Exception as e:
+            print(e)
 
 def arg_profiles(args):
     print('Profiles :\n')
@@ -271,9 +300,11 @@ profiles.add_argument('--id', nargs=1, help='Select profile id')
 profiles.set_defaults(func=arg_profiles)
 
 history = subparsers.add_parser('history')
-history.add_argument('--profile', nargs=1, help='Select profile id')
+history.add_argument('--profile', nargs=1, help='select profile id')
 history.add_argument('--filter', action='append', help='add filter')
 history.add_argument('--urldecode', action='store_true', help='url decode hisotries')
+history.add_argument('--export', nargs=1, help='export output to csv file')
+history.add_argument('--to', nargs=1, default=['export'], help='destination path for export profile history')
 history.set_defaults(func=arg_history)
 
 fingerprint = subparsers.add_parser('fingerprint')

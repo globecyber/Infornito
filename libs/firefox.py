@@ -45,23 +45,22 @@ class firefox(general):
     def history(self, profile_path, filters=None):
 
         query = "SELECT url, visit_count, datetime(last_visit_date/1000000,'unixepoch') FROM moz_places ORDER BY visit_count;"
-        # try:
-        connection = sqlite3.connect(os.path.join(profile_path, self.config['files']['histories']))
-        db_cursor = connection.cursor()
-        db_cursor.execute(query)
-        urls = db_cursor.fetchall()
-        parsed_histories = []
-        for url in urls:
-            parsed_histories.append({
-                'url' : url[0],
-                'count' : str(url[1]),
-                'last_visit' : str(url[2])
-            })
-        db_cursor.close()
-        return parsed_histories        
-        # except Exception as error:
-        #     print('Error : ' + str(error))
-        #     exit()
+        try:
+            connection = sqlite3.connect(os.path.join(profile_path, self.config['files']['histories']))
+            db_cursor = connection.cursor()
+            db_cursor.execute(query)
+            urls = db_cursor.fetchall()
+            parsed_histories = []
+            for url in urls:
+                parsed_histories.append({
+                    'url' : url[0],
+                    'count' : str(url[1]),
+                    'last_visit' : str(url[2])
+                })
+            db_cursor.close()
+            return {'status': True, 'data': parsed_histories}
+        except Exception as error:
+            return {'status': False, 'data': str(error)}
 
     def downloads(self, profile_path):
         try:

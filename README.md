@@ -1,6 +1,8 @@
 <p align="center">
   <a href="https://globecyber.com"><img src="repo/infornito.png" ><br></a>
   <a href="https://www.python.org/downloads/">
+  <img src="https://img.shields.io/badge/Platform-Windows%20%7C%20MacOS%20%7C%20Linux-brightgreen.svg"></a>
+  <a href="https://www.python.org/downloads/">
   <img src="https://img.shields.io/badge/Python-3.*-blue.svg"></a>
   <a href="https://github.com/globecyber/Infornito/blob/master/LICENSE">
   <img src="https://img.shields.io/github/license/GlobeCyber/Infornito.svg"></a>

@@ -32,6 +32,7 @@ from browsers.chrome import chrome
 from browsers.safari import safari
 from libs.exporter import export_csv
 
+__version__ = 1.1
 
 def banner():
     print('''
@@ -40,8 +41,8 @@ def banner():
 / (_ / / _ \/ _ \/ -_) /__/ // / _ \/ -_) __/
 \___/_/\___/_.__/\__/\___/\_, /_.__/\__/_/   
                          /___/               
-            < Infornito v1.1 >
-''')
+            < Infornito v{} >
+'''.format(__version__))
 
 browser_modules = {
     'firefox': firefox(), 

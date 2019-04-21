@@ -251,7 +251,7 @@ def arg_history(args):
             print(e)
 
 def arg_profiles(args):
-    print('Profiles :\n')
+    print('[~] Profiles :\n')
     browser_profile_list = []
     try:
         profiles = profile_info(args.id[0])
@@ -265,8 +265,8 @@ def arg_profiles(args):
             browser_profile_list.append([key+1, profile_information['name'], profile_information['browser'].capitalize()])
 
     for profile in browser_profile_list:
-        print('{} => {} ({})'.format(profile[0],profile[2],profile[1]))
-    print('Example : python3 infornito.py history -pid {ProfileID}')
+        print('\t{} => {} ({})'.format(profile[0],profile[2],profile[1]))
+    print('\nUsage : infornito.py history --profile {ProfileID}')
 
 def arg_downloads(args):
     profile_information = profile_info(int(args.profile[0]))

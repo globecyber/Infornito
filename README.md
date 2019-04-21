@@ -123,7 +123,7 @@ python infornito.py downloads --profile 2
 Total url : 4
 ```
 ### [Fingerprint](#fingerprint)
-Generate MD5, Sha1, Sha256 of profile database.
+Generate browsers MD5, Sha1, Sha256 of profiles databases.
 ```bash
 python infornito.py fingerprint --profile 2
 ```

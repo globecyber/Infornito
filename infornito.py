@@ -285,6 +285,7 @@ def arg_downloads(args):
 banner()
 
 parser = argparse.ArgumentParser(description='Browser forensic tool')
+parser.add_argument('-v', '--version', action='version', version='[+] infornito current version is {}.'.format(str(__version__)))
 subparsers = parser.add_subparsers()
 
 profiles = subparsers.add_parser('profiles', description='List browsers profiles')

@@ -31,6 +31,7 @@ from browsers.firefox import firefox
 from browsers.chrome import chrome
 from browsers.safari import safari
 from libs.exporter import export_csv
+import libs.filterer as filterer
 
 __version__ = 1.1
 
@@ -183,44 +184,44 @@ def arg_history(args):
 
         if query_filters.get('ip'):
             if query_filters.get('ip') == True :
-                history = [item for item in history if re.search(r'^(https?:\/\/)?\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(:\d{1,5})?(\/.*)?$', item['url'])]
+                history = [item for item in history if filterer.ip_equal(item['url'])]
             elif query_filters.get('ip') == 'lan' :
-                history = [item for item in history if re.search(r'^(https?:\/\/)?((127\.\d{1,3}\.\d{1,3}\.\d{1,3})|(192\.168\.\d{1,3}\.\d{1,3})|(10\.\d{1,3}\.\d{1,3}\.\d{1,3})|(172\.1[6-9]\.\d{1,3}\.\d{1,3})|(172\.2[0-9]\.\d{1,3}\.\d{1,3})|(172\.3[0-1]\.\d{1,3}\.\d{1,3}))(:\d{1,5})?(\/.*)?$', item['url'])]
+                history = [item for item in history if filterer.ip_equal(item['url'], 'lan')]
             else:
-                history = [item for item in history if re.search(r'^(https?:\/\/)?('+query_filters.get('ip').replace(',','|')+')(:\d{1,5})?(\/.*)?$', item['url'])]
+                history = [item for item in history if filterer.ip_equal(item['url'], query_filters.get('ip'))]
 
         if query_filters.get('tld'):
-            history = [item for item in history if re.search(r'^(https?:\/\/)?(\w*\.)*(' + query_filters.get('tld').replace(',','|') + ')(\/.*)?$', item['url'])]
+            history = [item for item in history if filterer.tld_equal(item['url'], query_filters.get('tld'))]
 
         if query_filters.get('regex'):
             history = [item for item in history if re.search(query_filters.get('regex'), item['url'])]
 
         if query_filters.get('domain'):
-            history = [item for item in history if re.search(r'^(https?:\/\/)?(.*\.)?('+query_filters.get('domain').replace(',','|')+')(:\d{1,5})?(\/.*)?$', item['url'])]
+            history = [item for item in history if filterer.domain_equal(item['url'], query_filters.get('domain'))]
 
         if query_filters.get('protocol'):
-            history = [item for item in history if re.search(r'^'+query_filters.get('protocol')+':\/\/.*', item['url'])]
+            history = [item for item in history if filterer.protocol_equal(item['url'], query_filters.get('protocol'))]
     
         if query_filters.get('filetype'):
-            history = [item for item in history if re.search(r'^https?:\/\/.*\/.*\.('+query_filters.get('filetype').replace(',','|')+')$', item['url'])]
+            history = [item for item in history if filterer.filetype_equal(item['url'], query_filters.get('filetype'))]
 
         if query_filters.get('port'):
-            history = [item for item in history if re.search(r'^https?:\/\/.*:('+query_filters.get('port').replace(',','|')+')\/.*.$', item['url'])]
+            history = [item for item in history if filterer.port_equal(item['url'], query_filters.get('port'))]
 
         if query_filters.get('wordpress') == True :
-            history = [item for item in history if re.search(r'(wp-login\.php|\/wp-content\/|\/wp-admin)', item['url'])]
+            history = [item for item in history if filterer.is_wordpress(item['url'])]
 
-        if query_filters.get('adminpanels') == True :
-            history = [item for item in history if re.search(r'(\/admin\/|\/administrator\/|\/wp-admin)', item['url'])]
+        if query_filters.get('adminpanel') == True :
+            history = [item for item in history if filterer.is_adminpanel(item['url'])]
 
         if query_filters.get('xss') == True :
-            history = [item for item in history if re.search(r'''<[^\w<>]*(?:[^<>"'\s]*:)?[^\w<>]*(?:\W*s\W*c\W*r\W*i\W*p\W*t|\W*f\W*o\W*r\W*m|\W*s\W*t\W*y\W*l\W*e|\W*s\W*v\W*g|\W*m\W*a\W*r\W*q\W*u\W*e\W*e|(?:\W*l\W*i\W*n\W*k|\W*o\W*b\W*j\W*e\W*c\W*t|\W*e\W*m\W*b\W*e\W*d|\W*a\W*p\W*p\W*l\W*e\W*t|\W*p\W*a\W*r\W*a\W*m|\W*i?\W*f\W*r\W*a\W*m\W*e|\W*b\W*a\W*s\W*e|\W*b\W*o\W*d\W*y|\W*m\W*e\W*t\W*a|\W*i\W*m\W*a?\W*g\W*e?|\W*v\W*i\W*d\W*e\W*o|\W*a\W*u\W*d\W*i\W*o|\W*b\W*i\W*n\W*d\W*i\W*n\W*g\W*s|\W*s\W*e\W*t|\W*i\W*s\W*i\W*n\W*d\W*e\W*x|\W*a\W*n\W*i\W*m\W*a\W*t\W*e)[^>\w])|(?:<\w[\s\S]*[\s\0\/]|['"])(?:formaction|style|background|src|lowsrc|ping|on(?:d(?:e(?:vice(?:(?:orienta|mo)tion|proximity|found|light)|livery(?:success|error)|activate)|r(?:ag(?:e(?:n(?:ter|d)|xit)|(?:gestur|leav)e|start|drop|over)?|op)|i(?:s(?:c(?:hargingtimechange|onnect(?:ing|ed))|abled)|aling)|ata(?:setc(?:omplete|hanged)|(?:availabl|chang)e|error)|urationchange|ownloading|blclick)|Moz(?:M(?:agnifyGesture(?:Update|Start)?|ouse(?:PixelScroll|Hittest))|S(?:wipeGesture(?:Update|Start|End)?|crolledAreaChanged)|(?:(?:Press)?TapGestur|BeforeResiz)e|EdgeUI(?:C(?:omplet|ancel)|Start)ed|RotateGesture(?:Update|Start)?|A(?:udioAvailable|fterPaint))|c(?:o(?:m(?:p(?:osition(?:update|start|end)|lete)|mand(?:update)?)|n(?:t(?:rolselect|extmenu)|nect(?:ing|ed))|py)|a(?:(?:llschang|ch)ed|nplay(?:through)?|rdstatechange)|h(?:(?:arging(?:time)?ch)?ange|ecking)|(?:fstate|ell)change|u(?:echange|t)|l(?:ick|ose))|m(?:o(?:z(?:pointerlock(?:change|error)|(?:orientation|time)change|fullscreen(?:change|error)|network(?:down|up)load)|use(?:(?:lea|mo)ve|o(?:ver|ut)|enter|wheel|down|up)|ve(?:start|end)?)|essage|ark)|s(?:t(?:a(?:t(?:uschanged|echange)|lled|rt)|k(?:sessione|comma)nd|op)|e(?:ek(?:complete|ing|ed)|(?:lec(?:tstar)?)?t|n(?:ding|t))|u(?:ccess|spend|bmit)|peech(?:start|end)|ound(?:start|end)|croll|how)|b(?:e(?:for(?:e(?:(?:scriptexecu|activa)te|u(?:nload|pdate)|p(?:aste|rint)|c(?:opy|ut)|editfocus)|deactivate)|gin(?:Event)?)|oun(?:dary|ce)|l(?:ocked|ur)|roadcast|usy)|a(?:n(?:imation(?:iteration|start|end)|tennastatechange)|fter(?:(?:scriptexecu|upda)te|print)|udio(?:process|start|end)|d(?:apteradded|dtrack)|ctivate|lerting|bort)|DOM(?:Node(?:Inserted(?:IntoDocument)?|Removed(?:FromDocument)?)|(?:CharacterData|Subtree)Modified|A(?:ttrModified|ctivate)|Focus(?:Out|In)|MouseScroll)|r(?:e(?:s(?:u(?:m(?:ing|e)|lt)|ize|et)|adystatechange|pea(?:tEven)?t|movetrack|trieving|ceived)|ow(?:s(?:inserted|delete)|e(?:nter|xit))|atechange)|p(?:op(?:up(?:hid(?:den|ing)|show(?:ing|n))|state)|a(?:ge(?:hide|show)|(?:st|us)e|int)|ro(?:pertychange|gress)|lay(?:ing)?)|t(?:ouch(?:(?:lea|mo)ve|en(?:ter|d)|cancel|start)|ime(?:update|out)|ransitionend|ext)|u(?:s(?:erproximity|sdreceived)|p(?:gradeneeded|dateready)|n(?:derflow|load))|f(?:o(?:rm(?:change|input)|cus(?:out|in)?)|i(?:lterchange|nish)|ailed)|l(?:o(?:ad(?:e(?:d(?:meta)?data|nd)|start)?|secapture)|evelchange|y)|g(?:amepad(?:(?:dis)?connected|button(?:down|up)|axismove)|et)|e(?:n(?:d(?:Event|ed)?|abled|ter)|rror(?:update)?|mptied|xit)|i(?:cc(?:cardlockerror|infochange)|n(?:coming|valid|put))|o(?:(?:(?:ff|n)lin|bsolet)e|verflow(?:changed)?|pen)|SVG(?:(?:Unl|L)oad|Resize|Scroll|Abort|Error|Zoom)|h(?:e(?:adphoneschange|l[dp])|ashchange|olding)|v(?:o(?:lum|ic)e|ersion)change|w(?:a(?:it|rn)ing|heel)|key(?:press|down|up)|(?:AppComman|Loa)d|no(?:update|match)|Request|zoom))[\s\0]*=''', item['url'], re.IGNORECASE)]
+            history = [item for item in history if filterer.is_xss_attack(item['url'])]
 
         if query_filters.get('sqli') == True :
-            history = [item for item in history if re.search(r'''(?:(union(.*)select(.*)from))|(?:[\s()]case\s*\()|(?:\)\s*like\s*\()|(?:having\s*[^\s]+\s*[^\w\s])|(?:if\s?\([\d\w]\s*[=<>~])|(?:\"\s*or\s*\"?\d)|(?:\\x(?:23|27|3d))|(?:^.?\"$)|(?:(?:^[\"\\]*(?:[\d\"]+|[^\"]+\"))+\s*(?:n?and|x?or|not|\|\||\&\&)\s*[\w\"[+&!@(),.-])|(?:[^\w\s]\w+\s*[|-]\s*\"\s*\w)|(?:@\w+\s+(and|or)\s*[\"\d]+)|(?:@[\w-]+\s(and|or)\s*[^\w\s])|(?:[^\w\s:]\s*\d\W+[^\w\s]\s*\".)|(?:\Winformation_schema|table_name\W)|(?:\"\s*\*.+(?:or|id)\W*\"\d)|(?:\^\")|(?:^[\w\s\"-]+(?<=and\s)(?<=or\s)(?<=xor\s)(?<=nand\s)(?<=not\s)(?<=\|\|)(?<=\&\&)\w+\()|(?:\"\s*[^\w\s]+\s*[\W\d].*(?:#|--))|(?:\".*\*\s*\d)|(?:\"\s*or\s[^\d]+[\w-]+.*\d)|(?:[\d\W]\s+as\s*[\"\w]+\s*from)|(?:^[\W\d]+\s*(?:union|select|create|rename|truncate|load|alter|delete|update|insert|desc))|(?:(?:select|create|rename|truncate|load|alter|delete|update|insert|desc)\s+(?:(?:group_)concat|char|load_file)\s?\(?)|(?:end\s*\);)|(\"\s+regexp\W)|(?:[\s(]load_file\s*\()|(?:@.+=\s*\(\s*select)|(?:\d+\s*or\s*\d+\s*[\-+])|(?:\/\w+;?\s+(?:having|and|or|select)\W)|(?:\d\s+group\s+by.+\()|(?:(?:;|#|--)\s*(?:drop|alter))|(?:(?:;|#|--)\s*(?:update|insert)\s*\w{2,})|(?:[^\w]SET\s*@\w+)|(?:(?:n?and|x?or|not |\|\||\&\&)[\s(]+\w+[\s)]*[!=+]+[\s\d]*[\"=()])|(?:\"\s+and\s*=\W)|(?:\(\s*select\s*\w+\s*\()|(?:\*\/from)|(?:\+\s*\d+\s*\+\s*@)|(?:\w\"\s*(?:[-+=|@]+\s*)+[\d(])|(?:coalesce\s*\(|@@\w+\s*[^\w\s])|(?:\W!+\"\w)|(?:\";\s*(?:if|while|begin))|(?:\"[\s\d]+=\s*\d)|(?:order\s+by\s+if\w*\s*\()|(?:[\s(]+case\d*\W.+[tw]hen[\s(])''', item['url'], re.IGNORECASE)]
+            history = [item for item in history if filterer.is_sqli_attack(item['url'])]
         
         if query_filters.get('lfi') == True :
-            history = [item for item in history if re.search(r'''(?:etc\/\W*passwd)|(?:(?:\/|\\)?\.\.+(\/|\\)(?:\.+)?)''', item['url'], re.IGNORECASE)]
+            history = [item for item in history if filterer.is_lfi_attack(item['url'])]
 
     if args.export != None:
         print('[~] Exporting histories to csv file ...')

@@ -94,7 +94,7 @@ python infornito.py history --profile 2 --filter domain=target.com --filter file
 - Port : filter port number (--filter port=4880,3329)
 - File Type : filter file extension (--filter filetype=exe,pdf)
 - TLD : filter domain tld (--filter tld=com,us)
-- Admin Panels : filter all urls related to admin area (--filter adminpanels)
+- Admin Panel : filter all urls related to admin area (--filter adminpanel)
 - IP
   - filter ip urls (--filter ip)
   - filter lan ip address range (--filter ip=lan)

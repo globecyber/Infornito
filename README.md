@@ -105,6 +105,10 @@ python infornito.py history --profile 2 --filter domain=target.com --filter file
 - Sql injection : filter urls with sql injection attack pattern (--filter sqli)
 - LFI : filter urls with local file inclusion attack pattern (--filter lfi)
 - XSS : filter urls with cross site scripting attack pattern (--filter xss)
+- Total Visit : only urls visited more than specific time (--filter total_visit=25)
+- Date filters :
+  - from_date : only urls visited after specific date (--filter from_date=2019/04/20)
+  - to_date : only urls visited before specific date (--filter to_date=2019/04/20)
 ### Export histories
 Export histories to csv file.
 ```bash

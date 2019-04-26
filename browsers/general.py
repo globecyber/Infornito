@@ -20,6 +20,7 @@
 import platform
 import os
 import hashlib
+import datetime
 
 class general():
     def __init__(self):
@@ -29,6 +30,13 @@ class general():
     def set_profiles_path(self, path):
         self.profiles_path = path
 
+    def validate_simple_date_format(self, date_text):
+        try:
+            datetime.datetime.strptime(date_text, '%Y/%m/%d')
+            return True
+        except ValueError:
+            return False
+    
     def sha256sum(self, filepath):
         h  = hashlib.sha256()
         b  = bytearray(128*1024)

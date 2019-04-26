@@ -148,32 +148,31 @@ def arg_export(args):
     else:
         export_profile(args.profile[0])
 
-def get_history(profile_id):
+def get_history(profile_id, filters={}):
     profile_information = profile_info(profile_id)
-    history = browser_modules[profile_information['browser']].history(profile_information['path'])
+    history = browser_modules[profile_information['browser']].history(profile_information['path'], filters)
     return history
 
 def arg_history(args):
 
+    query_filters = parse_filters(args.filter)
     history = []
     if args.profile == None:
         print('[~] Getting profiles history ...')
         profiles = profile_info()
         for profile_id in range(1,len(profiles)+1):
-            history_response = get_history(profile_id)
+            history_response = get_history(profile_id, filters=query_filters)
             if not history_response['status']:
                 print('[-] Profile #{} : {}'.format(profile_id, history_response['data']))
             else:
                 history += history_response['data']
     else:
-        history_response = get_history(str(args.profile[0]))
+        history_response = get_history(str(args.profile[0]), filters=query_filters)
         if not history_response['status']:
             print('[-] {}'.format(history_response['data']))
             exit()
         
         history = history_response['data']
-
-    query_filters = parse_filters(args.filter)
 
     if args.urldecode or query_filters.get('xss') or query_filters.get('lfi') or query_filters.get('sqli'):
         for index, item in enumerate(history):

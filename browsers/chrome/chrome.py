@@ -53,6 +53,14 @@ class chrome(general):
         delta = datetime.timedelta(microseconds=int(webkit_timestamp))
         return epoch_start + delta
 
+    def _convert_date_to_webkit(self, date_string):
+        epoch_start = datetime.datetime(1601, 1, 1)
+        date_ = datetime.datetime.strptime(date_string, '%Y/%m/%d-%H:%M:%S')
+        diff = date_ - epoch_start
+        seconds_in_day = 60 * 60 * 24
+        return '{:<017d}'.format(
+            diff.days * seconds_in_day + diff.seconds + diff.microseconds)
+
     def downloads(self, profile_path):
         # TODO : Filtering By : ['fileextension', 'date', 'daterange', 'domain']
         try:
@@ -81,11 +89,43 @@ class chrome(general):
             print('Error : ' + str(error))
             exit()
 
-    def history(self, profile_path):
+    def history(self, profile_path, filters={}):
+
+        query_conditions = []
+        if filters.get('from_date') != None:
+            # if input just have date
+            from_date = filters.get('from_date')
+            if self.validate_simple_date_format(from_date):
+                from_date += '-00:00:00'
+
+            try:
+                query_conditions.append('last_visit_time >='+ str(self._convert_date_to_webkit(from_date)))
+            except Exception as e:
+                print('[-] from_date filter error : {}'.format(e))
+
+        if filters.get('to_date') != None:
+            # if input just have date
+            to_date = filters.get('to_date')
+            if self.validate_simple_date_format(to_date):
+                to_date += '-23:59:59'
+
+            try:
+                query_conditions.append('last_visit_time <='+ str(self._convert_date_to_webkit(to_date)))
+            except Exception as e:
+                print('[-] to_date filter error : {}'.format(e))
+
+        if filters.get('total_visit') != None:
+            query_conditions.append('visit_count >='+ filters.get('total_visit'))
+        
         try:
+            sql_query = "SELECT url, visit_count, last_visit_time FROM urls"
+            if query_conditions:
+                sql_query += ' WHERE '+ ' and '.join(query_conditions)
+            sql_query += ' ORDER BY visit_count'
+
             connection = sqlite3.connect(os.path.join(profile_path, self.config['files']['histories']))
             db_cursor = connection.cursor()
-            db_cursor.execute("SELECT url, visit_count, last_visit_time FROM urls ORDER BY visit_count;")
+            db_cursor.execute(sql_query)
             urls = db_cursor.fetchall()
             parsed_histories = []
             for url in urls:

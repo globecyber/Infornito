@@ -42,13 +42,48 @@ class firefox(general):
         general.__init__(self)
         self.profiles_path = os.path.join(self.user_home, self.config['platform_profile_path'][self.platform_name])
 
+    def _convert_date_to_unixepoch(self, date_string):
+        input_date = datetime.strptime(date_string, '%Y/%m/%d-%H:%M:%S')
+        epoch = datetime.utcfromtimestamp(0)
+        return int((input_date - epoch).total_seconds() * 1000000)
+
     def history(self, profile_path, filters=None):
 
-        query = "SELECT url, visit_count, datetime(last_visit_date/1000000,'unixepoch') FROM moz_places ORDER BY visit_count;"
+        query_conditions = []
+        if filters.get('from_date') != None:
+            # if input just have date
+            from_date = filters.get('from_date')
+            if self.validate_simple_date_format(from_date):
+                from_date += '-00:00:00'
+
+            try:
+                query_conditions.append('last_visit_date >='+ str(self._convert_date_to_unixepoch(from_date)))
+            except Exception as e:
+                print('[-] from_date filter error : {}'.format(e))
+
+        if filters.get('to_date') != None:
+            # if input just have date
+            to_date = filters.get('to_date')
+            if self.validate_simple_date_format(to_date):
+                to_date += '-23:59:59'
+
+            try:
+                query_conditions.append('last_visit_date <='+ str(self._convert_date_to_unixepoch(to_date)))
+            except Exception as e:
+                print('[-] to_date filter error : {}'.format(e))
+
+        if filters.get('total_visit') != None:
+            query_conditions.append('visit_count >='+ filters.get('total_visit'))
+
+        sql_query = "SELECT url, visit_count, datetime(last_visit_date/1000000,'unixepoch') FROM moz_places"
+        if query_conditions:
+            sql_query += ' WHERE '+ ' and '.join(query_conditions)
+        sql_query += ' ORDER BY visit_count'
+
         try:
             connection = sqlite3.connect(os.path.join(profile_path, self.config['files']['histories']))
             db_cursor = connection.cursor()
-            db_cursor.execute(query)
+            db_cursor.execute(sql_query)
             urls = db_cursor.fetchall()
             parsed_histories = []
             for url in urls:

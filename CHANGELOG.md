@@ -9,9 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Adding support for opera
 - Adding support for internet explorer
 - Extract saved passwords
-- Filter history queries
-    - Time range
-    - Total visit
 - Filter file download queries
     - Time range
     - Total visit
@@ -22,6 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Port
     - File types
     - Regex
+
+## [1.2] - 2019-04-27
+### Added
+- Filter history queries
+    - Time range
+    - Total visit
 
 ## [1.1] - 2019-04-21
 ### Added

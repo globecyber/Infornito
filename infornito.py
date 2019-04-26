@@ -33,7 +33,7 @@ from browsers.safari import safari
 from libs.exporter import export_csv
 import libs.filterer as filterer
 
-__version__ = 1.1
+__version__ = 1.2
 
 def banner():
     print('''

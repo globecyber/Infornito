@@ -119,7 +119,7 @@ HTML
 ```bash
 python infornito.py history --profile 2 --export html --to ~/Desktop/export
 ```
-If you're interested in seeing a demo, please [click here](http://infornito.globecyber.com).
+If you're interested in seeing a demo, please [click here](https://infornito.globecyber.com).
 
 ### [Downloads](#downloads)
 Show Profile downloaded files.

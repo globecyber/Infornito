@@ -42,8 +42,8 @@ class firefox(general):
         general.__init__(self)
         self.profiles_path = os.path.join(self.user_home, self.config['platform_profile_path'][self.platform_name])
 
-    def _convert_date_to_unixepoch(self, date_string):
-        input_date = datetime.strptime(date_string, '%Y/%m/%d-%H:%M:%S')
+    def _convert_datetime_to_timestamp(self, datetime_input):
+        input_date = datetime.strptime(datetime_input, '%Y/%m/%d-%H:%M:%S')
         epoch = datetime.utcfromtimestamp(0)
         return int((input_date - epoch).total_seconds() * 1000000)
 
@@ -57,9 +57,10 @@ class firefox(general):
                 from_date += '-00:00:00'
 
             try:
-                query_conditions.append('last_visit_date >='+ str(self._convert_date_to_unixepoch(from_date)))
+                query_conditions.append('last_visit_date >='+ str(self._convert_datetime_to_timestamp(from_date)))
             except Exception as e:
                 print('[-] from_date filter error : {}'.format(e))
+                exit()
 
         if filters.get('to_date') != None:
             # if input just have date
@@ -68,14 +69,15 @@ class firefox(general):
                 to_date += '-23:59:59'
 
             try:
-                query_conditions.append('last_visit_date <='+ str(self._convert_date_to_unixepoch(to_date)))
+                query_conditions.append('last_visit_date <='+ str(self._convert_datetime_to_timestamp(to_date)))
             except Exception as e:
                 print('[-] to_date filter error : {}'.format(e))
+                exit()
 
         if filters.get('total_visit') != None:
             query_conditions.append('visit_count >='+ filters.get('total_visit'))
 
-        sql_query = "SELECT url, visit_count, datetime(last_visit_date/1000000,'unixepoch') FROM moz_places"
+        sql_query = "SELECT url, visit_count, datetime(last_visit_date/1000000,'unixepoch'), title FROM moz_places"
         if query_conditions:
             sql_query += ' WHERE '+ ' and '.join(query_conditions)
         sql_query += ' ORDER BY visit_count'
@@ -89,6 +91,7 @@ class firefox(general):
             for url in urls:
                 parsed_histories.append({
                     'url' : url[0],
+                    'title' : url[3],
                     'count' : str(url[1]),
                     'last_visit' : str(url[2])
                 })

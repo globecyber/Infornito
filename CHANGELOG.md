@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-- Loading offline profile
+- Load offline profile
 - Adding support for opera
 - Adding support for internet explorer
 - Extract saved passwords
@@ -19,6 +19,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Port
     - File types
     - Regex
+- HTML export
+    - download
+
+## [1.3] - 2019-04-29
+### Added
+- added history HTML export
+- added history page title to export file
+- added time filter to safari
 
 ## [1.2] - 2019-04-27
 ### Added

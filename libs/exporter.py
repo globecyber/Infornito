@@ -10,8 +10,7 @@ def export_csv(destpath, filename, columns, rows):
         writer = csv.writer(outcsv, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
         writer.writerow(columns)
         for item in rows:
-            writer.writerow([sanitize_csv(item[columns[0]]), sanitize_csv(item[columns[1]]), sanitize_csv(item[columns[2]])])
-
+            writer.writerow([sanitize_csv(item[columns[0]]), sanitize_csv(item[columns[1]]), sanitize_csv(item[columns[2]]), sanitize_csv(item[columns[3]])])
 
 def sanitize_csv(sinput):
-    return sinput.replace(',','%2C')
+    return str(sinput).replace(',','%2C')

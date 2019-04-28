@@ -42,7 +42,7 @@ git clone https://github.com/GlobeCyber/Infornito
 / (_ / / _ \/ _ \/ -_) /__/ // / _ \/ -_) __/
 \___/_/\___/_.__/\__/\___/\_, /_.__/\__/_/
                          /___/
-            < Infornito v1.2 >
+            < Infornito v1.3 >
 
 usage: infornito.py [-h] {profiles,history,downloads,fingerprint} ...
 
@@ -89,7 +89,7 @@ python infornito.py history --profile 2 --filter domain=target.com --filter file
 ```
 [12] https://www.target.com:4880/documents/secret.pdf ( 2019-03-27 11:15:18 )
 ```
-### Filter histories
+### Filter history
 - Domain : filter domain name (--filter domain=target.com)
 - Port : filter port number (--filter port=4880,3329)
 - File Type : filter file extension (--filter filetype=exe,pdf)
@@ -110,11 +110,17 @@ python infornito.py history --profile 2 --filter domain=target.com --filter file
 - Date filters :
   - from_date : only urls visited after specific date (--filter from_date=2019/04/20)
   - to_date : only urls visited before specific date (--filter to_date=2019/04/20)
-### Export histories
-Export histories to csv file.
+### Export history
+CSV
 ```bash
 python infornito.py history --profile 2 --export csv --to ~/Desktop/export
 ```
+HTML
+```bash
+python infornito.py history --profile 2 --export html --to ~/Desktop/export
+```
+If you're interested in seeing a demo, please [click here](http://infornito.globecyber.com).
+
 ### [Downloads](#downloads)
 Show Profile downloaded files.
 ```bash

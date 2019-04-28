@@ -20,20 +20,26 @@
 # Do it at your own risks
 
 import os
+import sys
 import json
 import argparse
 import platform
 import re
 import urllib.parse
-from shutil import copyfile
+import urllib.request
+import zipfile
+import glob
+import html
+from shutil import copyfile, copyfileobj
 from datetime import datetime
 from browsers.firefox import firefox
 from browsers.chrome import chrome
 from browsers.safari import safari
 from libs.exporter import export_csv
 import libs.filterer as filterer
+from libs.general import copyDirectory
 
-__version__ = 1.2
+__version__ = 1.3
 
 def banner():
     print('''
@@ -45,6 +51,8 @@ def banner():
             < Infornito v{} >
 '''.format(__version__))
 
+templates_path = os.path.join(os.getcwd(), 'templates')
+default_export_path = './exports'
 browser_modules = {
     'firefox': firefox(), 
     'chrome': chrome(), 
@@ -53,6 +61,9 @@ browser_modules = {
 
 def _urldecode(string):
     return urllib.parse.unquote(string)
+
+def _urlencode(string):
+    return urllib.parse.quote(string)
 
 def profile_info(profile_id=None):
 
@@ -223,20 +234,81 @@ def arg_history(args):
             history = [item for item in history if filterer.is_lfi_attack(item['url'])]
 
     if args.export != None:
-        print('[~] Exporting histories to csv file ...')
-        try:
-            current_time = datetime.utcnow().strftime('%Y-%m-%d %H-%M-%S')
-            if args.profile != None:
-                output_filename = 'infornito_profile_{}_{}.csv'.format(str(args.profile[0]),current_time)
-            else:
-                output_filename = 'infornito_profiles_{}.csv'.format(current_time)
-            
-            final_path = os.path.join(args.to[0], 'history')
-            export_csv(final_path, output_filename, ['url', 'last_visit', 'count'], history)
-            print('[+] Done')
-        except Exception as e:
-            print('[-]' + str(e))
-        
+
+        export_type = args.export[0]
+        print('[~] Exporting history to {} file ...'.format(export_type))
+        current_time = datetime.utcnow().strftime('%Y-%m-%d %H-%M-%S')
+        export_path = default_export_path
+        if args.to != None:
+            export_path = args.to[0]
+        final_path = os.path.join(export_path, current_time)
+
+        print('\t[+] Export path : {}'.format(final_path))
+
+        if export_type == 'html':
+
+            try:
+                if not os.path.exists(templates_path):
+                    os.makedirs(templates_path)
+                
+                if not os.path.exists(os.path.join(templates_path, 'html')):
+                    print('[!] html template not found, trying to download template ...')
+                    html_template_url = 'https://github.com/globecyber/InfornitoExportTemplates/raw/master/html.zip'
+                    local_html_template_path = os.path.join(templates_path, 'html.zip')
+                    try:
+                        if not os.path.exists(local_html_template_path):
+                            # Download template
+                            with urllib.request.urlopen(html_template_url) as response, open(local_html_template_path, 'wb') as out_file:
+                                copyfileobj(response, out_file)
+                            print('\t[+] html template downloaded successfully.')
+                        print('\t[~] extracting template ...')
+                        # Extract Template
+                        zip = zipfile.ZipFile((local_html_template_path))
+                        zip.extractall(os.path.join(templates_path, 'html'))
+                        zip.close()
+                        # Remove compressed file
+                        os.remove(os.path.join(local_html_template_path))
+                    except Exception as e:
+                        print('\t[-]' + str(e))
+                        print('\t[!] if you have any problem during download, you can download template from {} and extract it to {}.'.format(html_template_url, templates_path))
+                        exit()
+
+                with open(os.path.join(templates_path, 'html', 'history.template.html'), "r") as f:
+                    output_template = f.read()
+                
+                output_list = []
+                for item in history:
+                    temp = [html.escape(item['url']), html.escape(item['title']), item['count'], item['last_visit']]
+                    output_list.append(temp)
+
+                output_html = output_template.replace('%OUTPUT_DATA%', json.dumps(output_list))
+                output_html = output_html.replace('%COMMAND%', ' '.join(sys.argv))
+                
+                # Copy template to destination
+                copyDirectory(os.path.join(templates_path, 'html'), final_path)
+                # Remove template file
+                for item in glob.glob(os.path.join(final_path, "*.template.html")):
+                    os.remove(item)
+                # Save output
+                output_file = open(os.path.join(final_path, 'history.html'), "w")
+                output_file.write(output_html)
+                output_file.close()
+                print('\t[+] Done.')
+            except Exception as e:
+                print('\t[-]' + str(e))
+        else:
+            try:
+                if args.profile != None:
+                    output_filename = 'infornito_profile_{}_{}.csv'.format(str(args.profile[0]),current_time)
+                else:
+                    output_filename = 'infornito_profiles_{}.csv'.format(current_time)
+                
+                final_path = os.path.join(args.to[0])
+                export_csv(final_path, output_filename, ['url', 'title', 'last_visit', 'count'], history)
+                print('\t[+] Done')
+            except Exception as e:
+                print('\t[-]' + str(e))
+
     # Print Outputs
     else:
         try:

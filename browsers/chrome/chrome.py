@@ -48,14 +48,14 @@ class chrome(general):
         self.profiles_path = os.path.join(self.user_home, self.config['platform_profile_path'][self.platform_name])
 
     # Private Methods
-    def _convert_date_from_webkit(self, webkit_timestamp):
+    def _convert_timestamp_to_datetime(self, timestamp_input):
         epoch_start = datetime.datetime(1601,1,1)
-        delta = datetime.timedelta(microseconds=int(webkit_timestamp))
+        delta = datetime.timedelta(microseconds=int(timestamp_input))
         return epoch_start + delta
 
-    def _convert_date_to_webkit(self, date_string):
+    def _convert_datetime_to_timestamp(self, datetime_input):
         epoch_start = datetime.datetime(1601, 1, 1)
-        date_ = datetime.datetime.strptime(date_string, '%Y/%m/%d-%H:%M:%S')
+        date_ = datetime.datetime.strptime(datetime_input, '%Y/%m/%d-%H:%M:%S')
         diff = date_ - epoch_start
         seconds_in_day = 60 * 60 * 24
         return '{:<017d}'.format(
@@ -77,7 +77,7 @@ class chrome(general):
                 downloads.append({
                     'url' : download_item[0],
                     'saved_in' : str(download_item[1]),
-                    'start_downloading_at' : str(self._convert_date_from_webkit(download_item[2])),
+                    'start_downloading_at' : str(self._convert_timestamp_to_datetime(download_item[2])),
                     'size' : download_item[3],
                     'is_fully_download' : is_fully_download
                 })
@@ -99,9 +99,10 @@ class chrome(general):
                 from_date += '-00:00:00'
 
             try:
-                query_conditions.append('last_visit_time >='+ str(self._convert_date_to_webkit(from_date)))
+                query_conditions.append('last_visit_time >='+ str(self._convert_datetime_to_timestamp(from_date)))
             except Exception as e:
                 print('[-] from_date filter error : {}'.format(e))
+                exit()
 
         if filters.get('to_date') != None:
             # if input just have date
@@ -110,15 +111,16 @@ class chrome(general):
                 to_date += '-23:59:59'
 
             try:
-                query_conditions.append('last_visit_time <='+ str(self._convert_date_to_webkit(to_date)))
+                query_conditions.append('last_visit_time <='+ str(self._convert_datetime_to_timestamp(to_date)))
             except Exception as e:
                 print('[-] to_date filter error : {}'.format(e))
+                exit()
 
         if filters.get('total_visit') != None:
             query_conditions.append('visit_count >='+ filters.get('total_visit'))
         
         try:
-            sql_query = "SELECT url, visit_count, last_visit_time FROM urls"
+            sql_query = "SELECT url, visit_count, last_visit_time, title FROM urls"
             if query_conditions:
                 sql_query += ' WHERE '+ ' and '.join(query_conditions)
             sql_query += ' ORDER BY visit_count'
@@ -131,8 +133,9 @@ class chrome(general):
             for url in urls:
                 parsed_histories.append({
                     'url' : url[0],
+                    'title' : str(url[3]),
                     'count' : str(url[1]),
-                    'last_visit' : str(self._convert_date_from_webkit(url[2]))
+                    'last_visit' : str(self._convert_timestamp_to_datetime(url[2]))
                 })
             db_cursor.close()
             return {'status': True, 'data': parsed_histories}

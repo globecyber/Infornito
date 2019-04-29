@@ -380,7 +380,9 @@ def arg_downloads(args):
 
         if query_filters.get('port'):
             downloads = [item for item in downloads if filterer.port_equal(item['url'], query_filters.get('port'))]
-
+        
+        if query_filters.get('localfile') == True :
+            downloads = [item for item in downloads if filterer.is_localfile(item['url'])]
 
     for item in downloads:
         status = '+'

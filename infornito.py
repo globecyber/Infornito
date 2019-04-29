@@ -363,6 +363,9 @@ def arg_downloads(args):
             else:
                 downloads = [item for item in downloads if filterer.ip_equal(item['url'], query_filters.get('ip'))]
 
+        if query_filters.get('tld'):
+            downloads = [item for item in downloads if filterer.tld_equal(item['url'], query_filters.get('tld'))]
+
 
     for item in downloads:
         status = '+'

@@ -347,9 +347,23 @@ def arg_profiles(args):
     print('\nUsage : infornito.py history --profile {ProfileID}')
 
 def arg_downloads(args):
+    query_filters = parse_filters(args.filter)
+
     profile_information = profile_info(int(args.profile[0]))
     browser_type = profile_information['browser']
     downloads = browser_modules[browser_type].downloads(profile_information['path'])
+
+    # Filter Output
+    if query_filters != None:
+        if query_filters.get('ip'):
+            if query_filters.get('ip') == True :
+                downloads = [item for item in downloads if filterer.ip_equal(item['url'])]
+            elif query_filters.get('ip') == 'lan' :
+                downloads = [item for item in downloads if filterer.ip_equal(item['url'], 'lan')]
+            else:
+                downloads = [item for item in downloads if filterer.ip_equal(item['url'], query_filters.get('ip'))]
+
+
     for item in downloads:
         status = '+'
         if not item['is_fully_download']:
@@ -383,6 +397,7 @@ fingerprint.set_defaults(func=arg_fingerprint)
 
 downloads = subparsers.add_parser('downloads')
 downloads.add_argument('--profile', nargs=1, help='Select profile id')
+downloads.add_argument('--filter', action='append', help='add filter')
 downloads.set_defaults(func=arg_downloads)
 
 export = subparsers.add_parser('export')

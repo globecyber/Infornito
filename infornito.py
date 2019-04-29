@@ -378,6 +378,8 @@ def arg_downloads(args):
         if query_filters.get('filetype'):
             downloads = [item for item in downloads if filterer.filetype_equal(item['url'], query_filters.get('filetype'))]
 
+        if query_filters.get('port'):
+            downloads = [item for item in downloads if filterer.port_equal(item['url'], query_filters.get('port'))]
 
 
     for item in downloads:

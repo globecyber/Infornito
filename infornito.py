@@ -224,6 +224,9 @@ def arg_history(args):
         if query_filters.get('adminpanel') == True :
             history = [item for item in history if filterer.is_adminpanel(item['url'])]
 
+        if query_filters.get('localfile') == True :
+            history = [item for item in history if filterer.is_localfile(item['url'])]
+
         if query_filters.get('xss') == True :
             history = [item for item in history if filterer.is_xss_attack(item['url'])]
 
@@ -232,6 +235,8 @@ def arg_history(args):
         
         if query_filters.get('lfi') == True :
             history = [item for item in history if filterer.is_lfi_attack(item['url'])]
+
+
 
     if args.export != None:
 

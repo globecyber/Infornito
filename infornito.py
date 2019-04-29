@@ -375,6 +375,9 @@ def arg_downloads(args):
         if query_filters.get('protocol'):
             downloads = [item for item in downloads if filterer.protocol_equal(item['url'], query_filters.get('protocol'))]
 
+        if query_filters.get('filetype'):
+            downloads = [item for item in downloads if filterer.filetype_equal(item['url'], query_filters.get('filetype'))]
+
 
 
     for item in downloads:

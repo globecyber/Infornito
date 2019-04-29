@@ -369,6 +369,8 @@ def arg_downloads(args):
         if query_filters.get('regex'):
             downloads = [item for item in downloads if re.search(query_filters.get('regex'), item['url'])]
 
+        if query_filters.get('domain'):
+            downloads = [item for item in downloads if filterer.domain_equal(item['url'], query_filters.get('domain'))]
 
 
     for item in downloads:

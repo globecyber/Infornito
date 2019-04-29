@@ -366,6 +366,10 @@ def arg_downloads(args):
         if query_filters.get('tld'):
             downloads = [item for item in downloads if filterer.tld_equal(item['url'], query_filters.get('tld'))]
 
+        if query_filters.get('regex'):
+            downloads = [item for item in downloads if re.search(query_filters.get('regex'), item['url'])]
+
+
 
     for item in downloads:
         status = '+'

@@ -278,7 +278,7 @@ def arg_history(args):
                 
                 output_list = []
                 for item in history:
-                    temp = [html.escape(item['url']), html.escape(item['title']), item['count'], item['last_visit']]
+                    temp = [html.escape(item['url']), html.escape(str(item['title'])), item['count'], item['last_visit']]
                     output_list.append(temp)
 
                 output_html = output_template.replace('%OUTPUT_DATA%', json.dumps(output_list))

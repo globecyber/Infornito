@@ -372,6 +372,10 @@ def arg_downloads(args):
         if query_filters.get('domain'):
             downloads = [item for item in downloads if filterer.domain_equal(item['url'], query_filters.get('domain'))]
 
+        if query_filters.get('protocol'):
+            downloads = [item for item in downloads if filterer.protocol_equal(item['url'], query_filters.get('protocol'))]
+
+
 
     for item in downloads:
         status = '+'

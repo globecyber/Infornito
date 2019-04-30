@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - HTML export
     - download
 
-## [1.4] - *
+## [1.4] - 2019-04-30
 ### Added
 - File download query filters
     - File extension

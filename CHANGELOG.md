@@ -9,9 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Adding support for opera
 - Adding support for internet explorer
 - Extract saved passwords
-- Filter file download queries
+- File download query filters
     - Time range
     - Total visit
+- HTML export
+    - download
+
+## [1.4] - *
+### Added
+- File download query filters
     - File extension
     - Domain / TLD
     - IP ( Lan / Specific IP )
@@ -19,8 +25,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Port
     - File types
     - Regex
-- HTML export
-    - download
+    - Localfile
+- History query filters
+    - Localfile
 
 ## [1.3] - 2019-04-29
 ### Added

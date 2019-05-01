@@ -239,6 +239,9 @@ def arg_history(args):
         if query_filters.get('social') == True :
             history = [item for item in history if filterer.is_social(item['url'])]
 
+        if query_filters.get('technical') == True :
+            history = [item for item in history if filterer.is_technical(item['url'])]
+
 
     if args.export != None:
 

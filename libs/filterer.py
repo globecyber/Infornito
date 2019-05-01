@@ -40,3 +40,6 @@ def is_sqli_attack(url):
 
 def is_lfi_attack(url):
     return re.search(r'''(?:etc\/\W*passwd)|(?:(?:\/|\\)?\.\.+(\/|\\)(?:\.+)?)''', url, re.IGNORECASE)
+
+def is_social(url):
+    return re.search(r'''http(s)?:\/\/(.*\.)?youtube.com\/[A-z0-9_-]+\/?|http(s)?:\/\/(.*\.)?twitter\.com\/[A-z0-9_]+\/?|http(s)?:\/\/([\w]+\.)?linkedin\.com\/in\/[A-z0-9_-]+\/?|http(s)?:\/\/([\w]+\.)?linkedin\.com\/pub\/[A-z0-9_-]+(\/[A-z0-9]+){3}\/?|http(s)?:\/\/(www\.)?(facebook|fb)\.com\/[A-z0-9_\-\.]+\/?|https?:\/\/(www\.)?instagram\.com\/([A-Za-z0-9_](?:(?:[A-Za-z0-9_]|(?:\.(?!\.))){0,28}(?:[A-Za-z0-9_]))?)|https?:\/\/plus\.google\.com\/\+[^\/]+|\d{21}|(?:(?:callto|skype):)(?:[a-z][a-z0-9\\.,\\-_]{5,31})(?:\\?(?:add|call|chat|sendfile|userinfo))?|https?:\/\/(t(elegram)?\.me|telegram\.org)\/([a-z0-9\_]{5,32})\/?''', url, re.IGNORECASE)

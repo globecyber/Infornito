@@ -236,6 +236,8 @@ def arg_history(args):
         if query_filters.get('lfi') == True :
             history = [item for item in history if filterer.is_lfi_attack(item['url'])]
 
+        if query_filters.get('social') == True :
+            history = [item for item in history if filterer.is_social(item['url'])]
 
 
     if args.export != None:

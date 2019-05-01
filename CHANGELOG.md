@@ -15,6 +15,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - HTML export
     - download
 
+## [*] - *
+### Added
+- Added Social filter ( twitter.com, youtube.com, instagram.com, facebook.com, linkedin.com, skype.com, plus.google.com )
+- Added Technical filter ( github.com, stackoverflow.com, stackexchange.com, technet.microsoft.com, exploit-db.com)
+
 ## [1.4] - 2019-04-30
 ### Added
 - File download query filters

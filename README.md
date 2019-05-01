@@ -100,6 +100,8 @@ python infornito.py history --profile 2 --filter domain=target.com --filter file
   - filter specific ip address (--filter ip=10.10.20.240)
 - Protocol : filter urls with specific protocol (--filter protocol=https)
 - Admin Panel : filter all urls related to admin area (--filter adminpanel)
+- Social : filter all urls related to social networks (--filter social)
+- Technical : filter all urls related to technical persons (--filter technical)
 - Wordpress : filter wordpress websites (--filter wordpress)
 - Regex : filter urls by regular expression (--filter "regex=yahoo\.*")
 - Attack filters :

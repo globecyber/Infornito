@@ -46,3 +46,6 @@ def is_social(url):
 
 def is_technical(url):
     return re.search(r'''http(s)?:\/\/(www\.)?exploit-db.com\/exploits\/?\d{1,6}|http(s)?:\/\/(.*\.)?technet.microsoft.com\/[A-z0-9_-]+\/?|http(s)?:\/\/(.*\.)?stackexchange.com\/[A-z0-9_-]+\/?|http(s)?:\/\/(www\.)?stackoverflow.com\/[A-z0-9_-]+\/?|http(s)?:\/\/(www\.)?github\.com\/[A-z0-9_-]+\/?|http(s)?:\/\/([A-z0-9-_]+)\.github\.(com|io)\/?''', url, re.IGNORECASE)
+
+def is_storage(url):
+    return re.search(r'''http(s)?:\/\/(www\.)?drive.google.com\/drive\/folders\/.*|http(s)?:\/\/(www\.)?dropbox.com\/s\/|http(s)?:\/\/(www\.)?mega.nz\/#.*|http(s)?:\/\/(www\.)?wetransfer.com\/.*|http(s)?:\/\/(www\.)?transferxl.com\/.*|http(s)?:\/\/(www\.)?icloud.com\/.*''', url, re.IGNORECASE)

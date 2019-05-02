@@ -242,6 +242,8 @@ def arg_history(args):
         if query_filters.get('technical') == True :
             history = [item for item in history if filterer.is_technical(item['url'])]
 
+        if query_filters.get('storage') == True :
+            history = [item for item in history if filterer.is_storage(item['url'])]
 
     if args.export != None:
 

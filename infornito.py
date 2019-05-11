@@ -39,7 +39,7 @@ from libs.exporter import export_csv
 import libs.filterer as filterer
 from libs.general import copyDirectory
 
-__version__ = 1.4
+__version__ = 1.5
 
 def banner():
     print('''

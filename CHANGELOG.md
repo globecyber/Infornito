@@ -12,8 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - File download query filters
     - Time range
     - Total visit
-- HTML export
-    - download
+- Download history
+    - HTML export
+    - CSV export
+- Test on linux
 
 ## [1.5] - 2019-05-11
 ### Added

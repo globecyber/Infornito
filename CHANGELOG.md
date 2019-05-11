@@ -15,10 +15,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - HTML export
     - download
 
-## [*] - *
+## [1.5] - 2019-05-11
 ### Added
 - Added Social filter ( twitter.com, youtube.com, instagram.com, facebook.com, linkedin.com, skype.com, plus.google.com )
 - Added Technical filter ( github.com, stackoverflow.com, stackexchange.com, technet.microsoft.com, exploit-db.com)
+- Added Storage filter ( drive.google.com, dropbox.com, mega.nz, wetransfer.com, transferxl.com, icloud.com )
 
 ## [1.4] - 2019-04-30
 ### Added
